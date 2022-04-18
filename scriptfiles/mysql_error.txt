@@ -1,0 +1,12 @@
+[2022-04-17 09:59]
+Error ID: 1054
+Callback: 
+Query: UPDATE users SET setup = 0, czid = 635045, hours = 0, materials = 0, cash = 200, bank = 100,  gender = 1, age = 32, skin = 2, hunger = 100, thirsty = 100 WHERE uid = 36
+Error: Unknown column 'czid' in 'field list'
+
+[2022-04-17 09:59]
+Error ID: 1054
+Callback: 
+Query: UPDATE users SET camera_x = '1356.861', camera_y = '249.788', camera_z = '25.746', pos_x = '1357.339', pos_y = '249.887', pos_z = '19.567', pos_a = '274.081', interior = 0, world = 0, health = '100.0', armor = '0.0', hunger = 98, thirsty = 96, minutes = 1, warnings = 0, injured = 0, hospital = 0, upgradepoints = 0, spawnhealth = '50.0', spawnarmor = '0.0', jailtype = 0, jailtime = 0 WHERE uid = 36
+Error: Unknown column 'hunger' in 'field list'
+

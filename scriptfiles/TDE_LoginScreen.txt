@@ -1,0 +1,56 @@
+//Global TextDraws: 
+
+
+new Text:LoginTD[4];
+
+LoginTD[0] = TextDrawCreate(237.057220, 65.166618, "Northrock");
+TextDrawLetterSize(LoginTD[0], 0.762634, 4.761663);
+TextDrawAlignment(LoginTD[0], 1);
+TextDrawColor(LoginTD[0], 1336076799);
+TextDrawSetShadow(LoginTD[0], 1);
+TextDrawSetOutline(LoginTD[0], 1);
+TextDrawBackgroundColor(LoginTD[0], 255);
+TextDrawFont(LoginTD[0], 2);
+TextDrawSetProportional(LoginTD[0], 0);
+TextDrawSetShadow(LoginTD[0], 1);
+TextDrawSetSelectable(LoginTD[0], true);
+
+LoginTD[1] = TextDrawCreate(295.622192, 96.083312, "Roleplay");
+TextDrawLetterSize(LoginTD[1], 0.761229, 2.638335);
+TextDrawAlignment(LoginTD[1], 1);
+TextDrawColor(LoginTD[1], -1);
+TextDrawSetShadow(LoginTD[1], 0);
+TextDrawSetOutline(LoginTD[1], 1);
+TextDrawBackgroundColor(LoginTD[1], 255);
+TextDrawFont(LoginTD[1], 0);
+TextDrawSetProportional(LoginTD[1], 1);
+TextDrawSetShadow(LoginTD[1], 0);
+
+LoginTD[2] = TextDrawCreate(263.000000, 122.000000, "''Limitless");
+TextDrawLetterSize(LoginTD[2], 0.226178, 1.372499);
+TextDrawAlignment(LoginTD[2], 1);
+TextDrawColor(LoginTD[2], -1);
+TextDrawSetShadow(LoginTD[2], 0);
+TextDrawSetOutline(LoginTD[2], 1);
+TextDrawBackgroundColor(LoginTD[2], 255);
+TextDrawFont(LoginTD[2], 2);
+TextDrawSetProportional(LoginTD[2], 1);
+TextDrawSetShadow(LoginTD[2], 0);
+TextDrawSetSelectable(LoginTD[2], true);
+
+LoginTD[3] = TextDrawCreate(320.000000, 122.000000, "Possibilities.''");
+TextDrawLetterSize(LoginTD[3], 0.259911, 1.319999);
+TextDrawAlignment(LoginTD[3], 1);
+TextDrawColor(LoginTD[3], -1);
+TextDrawSetShadow(LoginTD[3], 0);
+TextDrawSetOutline(LoginTD[3], 1);
+TextDrawBackgroundColor(LoginTD[3], 255);
+TextDrawFont(LoginTD[3], 2);
+TextDrawSetProportional(LoginTD[3], 1);
+TextDrawSetShadow(LoginTD[3], 0);
+
+
+
+
+//Total textdraws exported: 4 (4 global textdraws / 0 player textdraws) ~ 19/6/2019 ~ 17:51:21
+TDEditor V1.17 BY ADRI1
