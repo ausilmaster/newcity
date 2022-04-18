@@ -1,0 +1,48 @@
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(293) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(369) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(401) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(531) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(681) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(1348) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(1421) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(3881) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(4300) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(6505) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(14020) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(15591) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(17959) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18134) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18174) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18381) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18408) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18424) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(18826) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(19231) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(19803) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(21403) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(22415) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(23335) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(24289) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(26927) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(27463) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(28205) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(28304) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(30261) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(30496) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(30749) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(32707) : ïðåäóïðåæäåíèå 208: ôóíêöèÿ ñ òèïîâûì ðåçóëüòàòîì èñïîëüçóåòñÿ ïåðåä îáúÿâëåíèåì, èíèöèèðîâàíà ïåðåîáðàáîòêà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(344) : îøèáêà 020: íåâåðíîå íàçâàíèå èäåíòèôèêàòîðà ""
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(346) : îøèáêà 010: íåâåðíàÿ ôóíêöèÿ èëè îáúÿâëåíèå
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(348) : îøèáêà 010: íåâåðíàÿ ôóíêöèÿ èëè îáúÿâëåíèå
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(351) : îøèáêà 010: íåâåðíàÿ ôóíêöèÿ èëè îáúÿâëåíèå
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(354) : îøèáêà 070: ïîääåðæêà ðàöèîíàëüíûõ ÷èñåë íå âêëþ÷åíà
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(354) : îøèáêà 010: íåâåðíàÿ ôóíêöèÿ èëè îáúÿâëåíèå
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(354) -- (356) : îøèáêà 010: íåâåðíàÿ ôóíêöèÿ èëè îáúÿâëåíèå
+C:\Users\ssssssssssssssssssss\Desktop\endlessrp\elrp github\pawno\include\inc\core\commands.inc(354) -- (356) : ôàòàëüíàÿ îøèáêà 107: ñëèøêîì ìíîãî îøèáîê íà îäíîé ñòðîêå
+
+Êîìïèëÿöèÿ îñòàíîâëåíà.
+
+Pawn compiler 3.2.3664	 	 	Copyright (c) 1997-2016, ITB CompuPhase
+
+
+Îøèáîê:8.
