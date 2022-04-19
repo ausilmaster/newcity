@@ -66,7 +66,7 @@
 #define MYSQL_HOSTNAME  "localhost" // host
 #define MYSQL_DATABASE  "nrp" /*"pd"*/
 #define MYSQL_USERNAME  "root" //user
-#define MYSQL_PASSWORD  "" //no pass
+#define MYSQL_PASSWORD  "123123" //no pass
 //----------------------------------------
 #undef MAX_PLAYERS
 #define MAX_PLAYERS 200
@@ -7647,7 +7647,7 @@ ShowDialogToPlayer(playerid, dialogid)
 				if(PlayerInfo[playerid][pVIPPackage] > 0) {
 					ShowPlayerDialog(playerid, DIALOG_BUYCLOTHES, DIALOG_STYLE_INPUT, string, "GHI CHU: Quan ao moi mien phi cho thanh vien VIP.\n\nVui long nhap ID skin ban muon.\n(( Danh sach: http://wiki.sa-mp.com/wiki/Skins:All ))", "Gui", "Huy bo");
 				} else {
-					ShowPlayerDialog(playerid, DIALOG_BUYCLOTHES, DIALOG_STYLE_INPUT, string, "GHI CHU: Quan ao moi voi gia $2,000.\n\nVui long nhap ID skin ban muon.\n(( Danh sach: http://wiki.sa-mp.com/wiki/Skins:All ))", "Gui", "Huy bo");
+					ShowPlayerDialog(playerid, DIALOG_BUYCLOTHES, DIALOG_STYLE_INPUT, string, "GHI CHU: Quan ao moi voi gia $70.\n\nVui long nhap ID skin ban muon.\n(( Danh sach: http:/sampwiki.blast.hk/wiki/Skins:All ))", "Gui", "Huy bo");
 				}
 			}
 		}
@@ -24735,8 +24735,8 @@ stock GetCommission(playerid, jobid)
 		{
 			switch(PlayerInfo[playerid][pLaborUpgrade])
 			{
-				case 0: com = Random(5, 10);
-				case 1: com = Random(15, 20);
+				case 0: com = Random(2, 5);
+				case 1: com = Random(6, 10);
 			}
 			return com;
 		}
@@ -24744,9 +24744,9 @@ stock GetCommission(playerid, jobid)
 		{
 			switch(PlayerInfo[playerid][pLaborUpgrade])
 			{
-				case 0: com = Random(10, 20);
-				case 1: com = Random(30, 40);
-				case 2: com = Random(50, 60);
+				case 0: com = Random(5, 10);
+				case 1: com = Random(11, 15);
+				case 2: com = Random(16, 20);
 			}
 			return com;
 		}
@@ -24893,7 +24893,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					SendClientMessageEx(playerid, COLOR_LIGHTRED, "[Pizza] {ffffff}Ban da dat 1 chiec banh pizza vao xe, hien tai co %d banh trong xe.", PlayerInfo[playerid][pPizzas]);
 				}
 			}
-			if(GetNearbyHouse(playerid) == houseid)
+			if(GetNearbyHouse(playerid) == houseid) // tien pizza
 			{
 				if(houseid != -1)
 				{
@@ -24966,7 +24966,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						{
 							PlayerInfo[playerid][pBasePaycheck] = 1;
 							SendClientMessage(playerid, COLOR_LIGHTRED, "[Giao hang] {FFFFFF}Ban da van chuyen thanh cong 5 thung hang. Khoan luong co ban cua ban da duoc them vao khoan luong tiep theo cua ban.");
-							AddToPaycheck(playerid, 120);
+							AddToPaycheck(playerid, 50);
 						}
 						new com;
 						switch(PlayerInfo[playerid][pLaborUpgrade])
@@ -32637,7 +32637,7 @@ CMD:nangcap(playerid, params[])
 	{
 	    if(PlayerInfo[playerid][pLaborUpgrade] >= 5)
 	    {
-	        SendClientMessage(playerid, COLOR_LIGHTRED, "Ky nang lao cong cua ban da duoc nang cap len level 5.");
+	        SendClientMessage(playerid, COLOR_LIGHTRED, "Ky nang nhan vien cua ban da duoc nang cap len level 5.");
 	        return 1;
 		}
 
@@ -32647,7 +32647,7 @@ CMD:nangcap(playerid, params[])
 		mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET laborupgrade = %i, upgradepoints = %i WHERE uid = %i", PlayerInfo[playerid][pLaborUpgrade], PlayerInfo[playerid][pUpgradePoints], PlayerInfo[playerid][pID]);
 		mysql_tquery(connectionID, queryBuffer);
 
-		SendClientMessageEx(playerid, COLOR_GREEN, "Ban da duoc nang cap ky nang lao cong len %i/5. Ban se duoc nhan %i phan tram tien boa khi ban lam viec", PlayerInfo[playerid][pLaborUpgrade], PlayerInfo[playerid][pLaborUpgrade] * 2);
+		SendClientMessageEx(playerid, COLOR_GREEN, "Ban da duoc nang cap Ky nang nhan vien len %i/5. Ban se duoc nhan %i phan tram tien boa khi ban lam viec", PlayerInfo[playerid][pLaborUpgrade], PlayerInfo[playerid][pLaborUpgrade] * 2);
 	}
 	else if(!strcmp(params, "spawnhealth", true))
 	{
@@ -42959,11 +42959,11 @@ CMD:buy(playerid, params[])
 
 	format(title, sizeof(title), "%s's %s [%i san pham]", BusinessInfo[businessid][bOwner], bizInteriors[BusinessInfo[businessid][bType]][intType], BusinessInfo[businessid][bProducts]);
 
-	switch(BusinessInfo[businessid][bType])
+	switch(BusinessInfo[businessid][bType]) // quan ao
 	{
 	    case BUSINESS_STORE:
 	    {
-	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($200)\nBo dam ($500)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($100)\nMay anh ($200)\nMay nghe nhac MP3 ($500)\nCan cau ($500)\nMoi cau ca ($300)\nAxit muriatic ($500)\nBaking soda ($500)\nDong ho ($3000)\nHe thong GPS ($500)\nCan xang ($100)\nDay thung ($20)\nMat na ($10,000)", "Chon", "Huy bo");
+	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($20)\nBo dam ($120)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($20)\nMay anh ($200)\nMay nghe nhac MP3 ($250)\nCan cau ($30)\nMoi cau ca ($10)\nAxit muriatic ($70)\nBaking soda ($70)\nDong ho ($350)\nHe thong GPS ($500)\nCan xang ($100)\nDay thung ($20)\nMat na ($2,000)", "Chon", "Huy bo");
 		}
 		/*
 		case BUSINESS_GUNSHOP:
@@ -42972,19 +42972,19 @@ CMD:buy(playerid, params[])
 		}*/
 		case BUSINESS_CLOTHES:
 		{
-		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Quan ao ($100)\nKinh ($20)\nKhan ran va mat na ($375)\nNon va mu luoi trai ($240)\nQuan ao khac ($500)", "Chon", "Huy bo");
+		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Quan ao ($70)\nKinh ($20)\nKhan ran va mat na ($50)\nNon va mu luoi trai ($50)\nQuan ao khac ($200)", "Chon", "Huy bo");
 		}
 		case BUSINESS_GYM:
 		{
-		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Binh thuong (Mien phi)\nBoxing ($4725)\nKung Fu ($7650)\nKneehead ($9275)\nGrabkick ($1250)\nElbow ($2950)", "Chon", "Huy bo");
+		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Binh thuong (Mien phi)\nBoxing ($275)\nKung Fu ($260)\nKneehead ($275)\nGrabkick ($125)\nElbow ($250)", "Chon", "Huy bo");
 		}
 		case BUSINESS_RESTAURANT:
 		{
-		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Nuoc khoang ($10)\nSprunk ($20)\nKhoai tay chien ($50)\nBanh mi kep ($70)\nBanh mi kep pho mai ($90)\nMac & pho mai ($120)\nSandwich ($50)\nCa va khoai tay chien ($100)\nBanh Pizza ($150)", "Chon", "Huy bo");
+		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Nuoc khoang ($6)\nSprunk ($8)\nKhoai tay chien ($10)\nBanh mi kep ($13)\nBanh mi kep pho mai ($15)\nMac & pho mai ($20)\nSandwich ($15)\nCa va khoai tay chien ($25)\nBanh Pizza ($30)", "Chon", "Huy bo");
 		}
 		case BUSINESS_BARCLUB:
 		{
-		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Nuoc khoang ($10)\nSprunk ($20)\nBia ($200)\nRuou ($350)\nWhiskey ($475)", "Chon", "Huy bo");
+		    ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Nuoc khoang ($6)\nSprunk ($8)\nBia ($8)\nRuou ($20)\nWhiskey ($25)", "Chon", "Huy bo");
 		}
 		case BUSINESS_TOOLSHOP:
 		{
@@ -43911,7 +43911,7 @@ CMD:giaobanh(playerid, params[])
 	}
 	if(PlayerInfo[playerid][pPizzas] == 0)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "[Loi] Ban khong con pizza nua. Hay quay lai nha hang de lay tiep.");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "[Loi] Ban khong co pizza. Hay quay lai nha hang de lay tiep.");
 	}
 	houseid = GetRandomHouse();
 	PlayerInfo[playerid][pPizzaHouse] = houseid;
