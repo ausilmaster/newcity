@@ -66,7 +66,7 @@
 #define MYSQL_HOSTNAME  "localhost" // host
 #define MYSQL_DATABASE  "nrp" /*"pd"*/
 #define MYSQL_USERNAME  "root" //user
-#define MYSQL_PASSWORD  "123123" //no pass
+#define MYSQL_PASSWORD  "" //no pass
 //----------------------------------------
 #undef MAX_PLAYERS
 #define MAX_PLAYERS 200
@@ -7614,7 +7614,7 @@ ShowDialogToPlayer(playerid, dialogid)
 		}
 		case DIALOG_BUYCLOTHINGTYPE:
 		{
-		    ShowPlayerDialog(playerid, DIALOG_BUYCLOTHINGTYPE, DIALOG_STYLE_LIST, "Chon mot phuong phao duyet.", "Duyet theo mo hinh\nDuyet theo danh sach", "Chon", "Tro lai");
+		    ShowPlayerDialog(playerid, DIALOG_BUYCLOTHINGTYPE, DIALOG_STYLE_LIST, "Chon mot phuong phap duyet.", "Duyet theo mo hinh\nDuyet theo danh sach", "Chon", "Tro lai");
 		}
 		case DIALOG_BUYCLOTHING:
 		{
@@ -24906,8 +24906,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					new com;
 					switch(PlayerInfo[playerid][pLaborUpgrade])
 					{
-						case 0: com = Random(5, 10);
-						case 1: com = Random(15, 20);
+						case 0: com = Random(2, 5);
+						case 1: com = Random(6, 10);
 					}
 					PlayerInfo[playerid][pHoldingPizza] = 0;
 					RemovePlayerAttachedObject(playerid, 0);
@@ -24917,7 +24917,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					if(PlayerInfo[playerid][pPizzasDelivered] == 10)
 					{
 						PlayerInfo[playerid][pBasePaycheck] = 1;
-						AddToPaycheck(playerid, 100);
+						AddToPaycheck(playerid, 50);
 						SendClientMessage(playerid, COLOR_LIGHTRED, "[Pizza]{FFFFFF} Ban da giao thanh cong 10 chiec banh pizza. Bay gio ban co the nhan duoc khoan luong co ban cua minh vao lan lanh luong tiep theo.");
 					}
 					SendClientMessageEx(playerid, COLOR_LIGHTRED, "[Pizza]{FFFFFF} Ban da giao Pizza thanh cong. Ban da nhan duoc  $%d tien hoa hong.", com);
@@ -24971,9 +24971,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						new com;
 						switch(PlayerInfo[playerid][pLaborUpgrade])
 						{
-							case 0: com = Random(10, 20);
-							case 1: com = Random(30, 40);
-							case 2: com = Random(50, 60);
+							case 0: com = Random(5, 10);
+							case 1: com = Random(11, 15);
+							case 2: com = Random(16, 20);
 
 						}
 						SendClientMessageEx(playerid, COLOR_LIGHTRED, "[Giao hang] {FFFFFF}Ban da nhan duoc $%d lam tien hoa hong cho thung hang da giao.", FormatNumber(com));
