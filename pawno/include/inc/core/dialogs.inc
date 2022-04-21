@@ -1717,7 +1717,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                {
 	                    case 0:
 	                    {
-                         	new price = 200;
+                         	new price = 20;
 
 	                        if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1747,7 +1747,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1:
 						{
-						    new price = 500;
+						    new price = 80;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1781,7 +1781,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 2:
 						{
-						    new price = 50;
+						    new price = 10;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1789,7 +1789,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                        }
 						    if(PlayerInfo[playerid][pCigars] >= 20)
 						    {
-						        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the mua toi da 20 dieu Xi Ga.");
+						        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the mua 20 dieu Xi Ga.");
 						    }
 
 						    if(PlayerInfo[playerid][pTraderUpgrade] > 0)
@@ -1815,7 +1815,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 3:
 						{
-						    new price = 100;
+						    new price = 50;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1849,7 +1849,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 4:
 						{
-						    new price = 100;
+						    new price = 20;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1883,7 +1883,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 5:
 						{
-						    new price = 200;
+						    new price = 120;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1910,7 +1910,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 6:
 						{
-						    new price = 500;
+						    new price = 100;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1944,7 +1944,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 7:
 						{
-						    new price = 500;
+						    new price = 30;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1978,7 +1978,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 8:
 						{
-						    new price = 300;
+						    new price = 10;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2012,7 +2012,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 9:
 						{
-						    new price = 500;
+						    new price = 50;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2046,7 +2046,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 10:
 						{
-						    new price = 500;
+						    new price = 50;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2080,7 +2080,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 11:
 						{
-						    new price = 3000;
+						    new price = 150;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2114,7 +2114,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 12:
 						{
-						    new price = 500;
+						    new price = 250;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2216,7 +2216,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 15:
 						{
-						    new price = 10000;
+						    new price = 2000;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2447,7 +2447,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1:
 						{
-						    new price = 4725;
+						    new price = 75;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2480,7 +2480,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 2:
 						{
-						    new price = 7650;
+						    new price = 60;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2513,7 +2513,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 3:
 						{
-						    new price = 9275;
+						    new price = 75;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2546,7 +2546,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 4:
 						{
-						    new price = 1250;
+						    new price = 45;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2579,7 +2579,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 5:
 						{
-						    new price = 2950;
+						    new price = 35;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2618,7 +2618,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    {
 				        case 0:
 				        {
-				            new price = 10;
+				            new price = 6;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2647,7 +2647,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1:
 				        {
-				            new price = 20;
+				            new price = 8;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2675,7 +2675,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 2:
 				        {
-				            new price = 50;
+				            new price = 10;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2705,7 +2705,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 3:
 				        {
-				            new price = 70;
+				            new price = 13;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2735,7 +2735,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 4:
 				        {
-				            new price = 90;
+				            new price = 15;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2765,7 +2765,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 5:
 				        {
-				            new price = 120;
+				            new price = 20;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2794,7 +2794,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 6:
 				        {
-				            new price = 50;
+				            new price = 15;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2824,7 +2824,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 7:
 				        {
-				            new price = 100;
+				            new price = 25;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2854,7 +2854,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 8:
 				        {
-				            new price = 150;
+				            new price = 30;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2890,7 +2890,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    {
 				        case 0:
 				        {
-				            new price = 50;
+				            new price = 6;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2916,7 +2916,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1:
 				        {
-				            new price = 100;
+				            new price = 8;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2942,7 +2942,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 2:
 				        {
-				            new price = 200;
+				            new price = 8;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2968,7 +2968,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 3:
 				        {
-				            new price = 350;
+				            new price = 20;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2994,7 +2994,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 4:
 				        {
-				            new price = 475;
+				            new price = 25;
 
 				            if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -3020,7 +3020,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 					}
 				}
-				else if(BusinessInfo[businessid][bType] == BUSINESS_TOOLSHOP)
+				/*else if(BusinessInfo[businessid][bType] == BUSINESS_TOOLSHOP)
 				{
 				    //First aid kit\t500 materials\nBody repair kit\t1000 materials\nPolice scanner\t2000 materials\nRimkit\t4000 materials
 
@@ -3131,7 +3131,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                        SendClientMessage(playerid, COLOR_WHITE, "HUONG DAN: Su dung /rimkit trong xe cua ban de lap bo vanh moi.");
 						}
 					}
-				}
+				}*/
 	        }
 	    }
 	    case DIALOG_BUYCLOTHES:
