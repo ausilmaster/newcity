@@ -151,6 +151,7 @@ new ipa[30];
 #define MAX_SPEED_CAMERAS           100
 // ---------------------------------------
 #define MAX_CAN_SA  100
+#define MAX_COWS 6
 // ---------------------------------------
 // --- Function Shortcuts --- //
 #define SCM 	SendClientMessage
@@ -342,7 +343,8 @@ new PizzaDuty[MAX_PLAYERS];
 // - Courier Jobs
 new VehiclesCourier[MAX_PLAYERS];
 new CourierDuty[MAX_PLAYERS];
-
+//Nong dan
+new FarmerDuty[MAX_PLAYERS];
 //Can sa
 new CheckCSTimer[MAX_PLAYERS];
 new HaiCanSa[MAX_PLAYERS];
@@ -360,6 +362,28 @@ enum CanSaEnum {
 	timeberc,
 }
 new CSInfo[MAX_CAN_SA][CanSaEnum];
+//du lieu tam thoi
+new Cgetfood[MAX_PLAYERS];
+new FeedingCow[MAX_PLAYERS];
+//----------------
+
+enum CowInfo //tao mot kieu du lieu
+{
+	Float:cPos_X,
+	Float:cPos_Y,
+	Float:cPos_Z,
+	Text3D:cowName
+};
+
+new Cows[MAX_COWS][CowInfo] = //mot kieu du lieu
+{
+	{-43.577941, 27.578924, 1.987187},
+	{-42.510791, 30.922767, 1.987187},
+	{-41.291625, 34.742908, 1.987187},
+	{-52.854862, 30.327772, 1.997186},
+	{-51.255889, 34.990421, 1.997186},
+	{-49.280281, 40.289936, 1.997186}
+};
 //==============================================================
 // Hooking for youtube links
 stock PlayAudioStream_Ex(playerid, url[], Float:posX = 0.0, Float:posY = 0.0, Float:posZ = 0.0, Float:distance = 50.0, usepos = 0)
@@ -712,6 +736,7 @@ enum
 	JOB_NONE = -1,
 	JOB_PIZZAMAN,
 	JOB_COURIER,
+	JOB_FARMER,
 	JOB_PILOT,
 	JOB_OILGATHER,
 	JOB_OILREFINE
@@ -2892,7 +2917,8 @@ enum jobEnum
 new jobLocations[][jobEnum] =
 {
 	{"Giao thuc an", 		377.6143, -65.8477, 1001.5078, 191.4441, 	155, INVALID_ACTOR_ID},
-	{"Giao hang nhanh",     	303.1698, -235.1395, 1.5781, 277.7019, 		147, INVALID_ACTOR_ID}
+	{"Giao hang nhanh",     	303.1698, -235.1395, 1.5781, 277.7019, 		147, INVALID_ACTOR_ID},
+	{"Nong dan",     	-83.0172, 9.7350, 3.1172, 233.9269, 		158, INVALID_ACTOR_ID}
 };
 
 enum atmEnum
@@ -4814,7 +4840,7 @@ LoadTextdraw(playerid)
 LoadMap()
 {
 	#include "./inc/mappings/allmap.inc"
-	//#include "./inc/mappings/cansa.inc"
+	#include "./inc/mappings/farmer.inc"
 }
 // - FOR PIZZAWTF
 
@@ -20326,6 +20352,7 @@ public OnPlayerConnect(playerid)
 	PlayerInfo[playerid][pPizzaQueue] = 0;
 	PlayerInfo[playerid][pPizzasDelivered] = 0;
 	PizzaDuty[playerid] = 0;
+	FarmerDuty[playerid] = 0;
 	PlayerInfo[playerid][pParkAssasination] = 0;
     PlayerInfo[playerid][pGraffiti] = -1;
     PlayerInfo[playerid][pGraffitiTime] = 0;
@@ -20754,6 +20781,11 @@ public OnPlayerConnect(playerid)
         printf("[%d] %f %f %f", i, CSInfo[i][CSPostion][0] ,CSInfo[i][CSPostion][1] ,CSInfo[i][CSPostion][2]);
         CSInfo[i][CSObj] = CreateObject(19473, CSInfo[i][CSPostion][0] ,CSInfo[i][CSPostion][1] ,CSInfo[i][CSPostion][2], 0,0,0, 5);
     }
+
+	for(new i;i<MAX_COWS;i++)
+	{
+		Cows[i][cowName] = CreateDynamic3DTextLabel("Bo Shorthorn", COLOR_LIGHTRED, Cows[i][cPos_X], Cows[i][cPos_Y], Cows[i][cPos_Z], 10.0);
+	}
     /*if(!BobTheBuilder[playerid])
 	{
 		DestroyAllBuildings(playerid);
@@ -21082,6 +21114,9 @@ public OnGameModeInit()
 	CreateDynamicPickup(1318, 1, 2393.4885, -2008.5726, 13.3467);*/
     CreateDynamicPickup(1582, 1, 379.2269,-62.0940,1001.5078);
     CreateDynamic3DTextLabel("[Nha Bep]\n{FFFFFF}Nhan Y de lay banh", COLOR_LIGHTRED, 379.2269,-62.0940,1001.5078, 10.0);
+    //Lay lua
+    CreateDynamicPickup(2901, 1, -86.0914, -31.2349, 3.1094);
+    CreateDynamic3DTextLabel("Nha Kho\n{FFFFFF}Nhan Y de lay thuc an", COLOR_LIGHTRED, -86.0914, -31.2349, 3.1094, 10.0);
     //Lay xe giao hang
     CreateDynamicPickup(1210, 1, 304.5129,-243.0556,1.5781);
     CreateDynamic3DTextLabel("Nhan N de lay xe giao hang", COLOR_YELLOW, 304.5129,-243.0556,1.5781, 10.0);
@@ -24774,6 +24809,17 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			    {ff3333}- Can cuoc cong dan\n- Dien thoai di dong\n- Mot cai GPS\n{ffffff}Neu nhu muon lam cong viec nay hay nhan 'Dong y'.", jobLocations[i][jobName]);
                 ShowPlayerDialog(playerid, DIALOG_GETJOB, DIALOG_STYLE_MSGBOX, caption, info, "Dong y", "Huy bo");
 				return 1;
+			}
+		}
+		if(IsPlayerInRangeOfPoint(playerid, 2.0, -86.0914, -31.2349, 3.1094))
+		{
+			if(Cgetfood[playerid] == 0)
+			{
+				Cgetfood[playerid] = 1;
+				SetPlayerAttachedObject(playerid, 0, 2901, 6, 0.0000, 0.0459, -0.3159, 0.0000, 91.7999, -25.6000, 1.0000, 1.0000, 1.0000, 0xFFFFFFFF, 0xFFFFFFFF);
+				SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Ban da lay mot bo thuc an cho Bo Shorthorn, hay mang den va cho bo an.");
+				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /drop [thucan].");
 			}
 		}
 	}
@@ -43670,6 +43716,31 @@ CMD:courierduty(playerid, params[])
 	}
 	return 1;
 }
+
+CMD:farmerduty(playerid, params[])
+{
+	if(!PlayerHasJob(playerid, JOB_FARMER))
+	{
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban phai la mot nong dan de su dung lenh nay.");
+	}
+	if(FarmerDuty[playerid] == 0)
+	{
+		switch(PlayerInfo[playerid][pGender])
+		{
+			case 1: SetPlayerSkin(playerid, 202);
+			case 2: SetPlayerSkin(playerid, 201);
+
+		}
+		SendClientMessage(playerid, COLOR_LIGHTRED, "[Nong dan] {FFFFFF}Bay gio ban dang trong gio lam viec nong dan, de bat dau thoi nao.");
+		FarmerDuty[playerid] = 1;
+	}
+	else if(FarmerDuty[playerid] == 1)
+	{
+		SendClientMessage(playerid, COLOR_LIGHTRED, "[Nong dan] {FFFFFF}Bay gio ban tam thoi nghi ngoi.");
+		FarmerDuty[playerid] = 0;
+	}
+	return 1;
+}
 CMD:traxe(playerid, params[])
 {
 	new choice[16];
@@ -43717,12 +43788,15 @@ CMD:duty(playerid, params[])
 	if(sscanf(params, "s[16]", choice))
 	{
 		SendClientMessage(playerid, COLOR_WHITE, "[Su dung]: /duty [Job]");
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "[Options]: Pizza, Giaohang");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "[Options]: Pizza, Giaohang, Nongdan");
 	}
 	if(!strcmp(choice, "pizza", true)) {
 		return callcmd::pizzaduty(playerid, params);
 	} else if(!strcmp(choice, "giaohang", true)) {
 		return callcmd::courierduty(playerid, params);
+	}
+	else if(!strcmp(choice, "nongdan", true)) {
+		return callcmd::farmerduty(playerid, params);
 	}
 	return 1;
 }
@@ -43753,58 +43827,6 @@ CMD:pizzaduty(playerid, params[])
 	}
 	return 1;
 }
-CMD:join(playerid, params[])
-{
-	for(new i = 0; i < sizeof(jobLocations); i ++)
-	{
-	    if(IsPlayerInRangeOfPoint(playerid, 3.0, jobLocations[i][jobX], jobLocations[i][jobY], jobLocations[i][jobZ]))
-	    {
-	    	ApplyActorAnimation(jobLocations[i][jobActorID], "PED", "IDLE_CHAT", 4.1, 0, 1, 1, 0, 3000);
-
-	        if(PlayerInfo[playerid][pJob] != JOB_NONE)
-	        {
-	            if(PlayerInfo[playerid][pVIPPackage] >= 2)
-	        	{
-	        	    if(PlayerInfo[playerid][pSecondJob] != JOB_NONE)
-	        	    {
-	        	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da co 2 cong viec. Hay thoat mot cong viec truoc khi nhan cong viec khac.");
-	        	    }
-	        	    if(PlayerInfo[playerid][pJob] == i)
-	        	    {
-	        	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da co cong viec nay roi.");
-	        	    }
-
-	        	    mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET secondjob = %i WHERE uid = %i", i, PlayerInfo[playerid][pID]);
-					mysql_tquery(connectionID, queryBuffer);
-
-					PlayerInfo[playerid][pSecondJob] = i;
-					if(PlayerInfo[playerid][pSecondJob] == JOB_PIZZAMAN)
-					{
-						return SendClientMessage(playerid, COLOR_AQUA, "Bay gio ban la nguoi {FF6347}Van chuyen Pizza{FFFFFF}. De bat dau cong viec, hay den gan xe Pizza va go {FF6347}/duty [pizza]{33CCFF}.");
-					}
-					SendClientMessageEx(playerid, COLOR_AQUA, "Ban da nhan cong viec {FF6347}%s{FFFFFF}. Su dung /jobhelp de xem danh sach lenh cho cong viec moi cua ban.", jobLocations[i][jobName]);
-	            }
-	            else
-	            {
-	            	SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da co mot cong viec. Vui long bo cong viec hien tai cua ban truoc khi nhan mot cong viec khac.");
-				}
-
-				return 1;
-			}
-
-			mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET job = %i WHERE uid = %i", i, PlayerInfo[playerid][pID]);
-			mysql_tquery(connectionID, queryBuffer);
-
-			PlayerInfo[playerid][pJob] = i;
-			SendClientMessageEx(playerid, COLOR_AQUA, "Ban da nhan cong viec {FF6347}%s{33CCFF}. Su dung /jobhelp de xem danh sach lenh cho cong viec moi cua ban.", jobLocations[i][jobName]);
-			return 1;
-		}
-	}
-
-	SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o noi nhan cong viec.");
-	return 1;
-}
-
 CMD:quitjob(playerid, params[])
 {
 	new slot;
@@ -58732,6 +58754,71 @@ CMD:haicansa(playerid, params[]) {
     return 1;
 }
 
+
+forward CFeeding(playerid); //tao mot ham` mo rong
+public CFeeding(playerid)
+{
+	SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Ban da cho Bo Shorthorn an, hien tai Bo Shorthorn da no.");
+	SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Tien luong cua ban se duoc tinh vao khoan luong tiep theo.");
+	Cgetfood[playerid] = 0;
+	FeedingCow[playerid] = 0;
+	AddToPaycheck(playerid, 5);
+
+	RemovePlayerAttachedObject(playerid, 0);
+	TogglePlayerControllable(playerid, 1);
+	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1);
+	ClearAnimations(playerid);
+	return 1;
+}
+
+//Lenh cho bo ngu an co
+CMD:farmer(playerid, params[])
+{
+	new choice[20];
+	for(new i;i<MAX_COWS;i++)
+	{
+		if(FarmerDuty[playerid] == 0)
+		{
+			return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong dang trong gio lam viec.");
+		}
+		if(sscanf(params, "s[20]", choice))
+		{
+			SendClientMessage(playerid, COLOR_WHITE, "Su dung: /farmer [tuy chon]");
+			SendClientMessage(playerid, COLOR_WHITE, "Tuy chon: Laythucan, Choan");
+			return 1;
+		}
+		if(!strcmp(choice, "laythucan", true)) //lay thuc an (lua')
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 2.0, -86.0914, -31.2349, 3.1094))
+			{
+				if(Cgetfood[playerid] == 0)
+				{
+					Cgetfood[playerid] = 1;
+					SetPlayerAttachedObject(playerid, 0, 2901, 6, 0.0000, 0.0459, -0.3159, 0.0000, 91.7999, -25.6000, 1.0000, 1.0000, 1.0000, 0xFFFFFFFF, 0xFFFFFFFF);
+					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+					SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Ban da lay mot bo thuc an cho Bo Shorthorn, hay mang den va cho bo an.");
+					SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /drop [thucan].");
+				}
+			}
+			else SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o noi lay thuc an cho Bo Shorthorn.");
+		}
+		else if(!strcmp(choice, "choan", true)) // cho Bo ngu an
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 1.5, Cows[i][cPos_X], Cows[i][cPos_Y], Cows[i][cPos_Z]))
+			{
+				if(Cgetfood[playerid] > 0 && FeedingCow[playerid] == 0)
+				{
+					FeedingCow[playerid] = 1;
+					TogglePlayerControllable(playerid, 0);
+					SetTimerEx("CFeeding", 15000, 0, "d", playerid);
+					ApplyAnimation(playerid,"COP_AMBIENT","Copbrowse_loop",4.1,1,0,0,0,0,1);
+				}
+			}
+		}
+	}
+	return 1;
+}
 /*forward DCC_OnChannelMessage(DCC_Channel:channel, DCC_User:author, const message[]);
 forward SendDiscordMessage(channel[], const fmat[], va_args<>);
 
