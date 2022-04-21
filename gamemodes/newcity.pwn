@@ -277,6 +277,9 @@ new PlayerText:Custom_Hud[MAX_PLAYERS][31];
 new PlayerText:PD_Card[MAX_PLAYERS][7];
 new PlayerText:Cz_Text[MAX_PLAYERS][8];
 new PlayerText:Loading_Text[MAX_PLAYERS][3];
+new Text:SelectSkin[6];
+
+new ChooseSkin[MAX_PLAYERS];
 // ---------------------------------------
 #define SERVER_MUSIC_URL "new-city.net"
 #define SERVER_FETCH_URL "new-city.net"
@@ -4841,6 +4844,7 @@ LoadMap()
 {
 	#include "./inc/mappings/allmap.inc"
 	#include "./inc/mappings/farmer.inc"
+	#include "./inc/mappings/vip_house_6.inc"
 }
 // - FOR PIZZAWTF
 
@@ -6886,8 +6890,8 @@ forward progress_bar_show(playerid);
 public progress_bar_show(playerid)
 {
 	new Float:health, Float:armour, Float:add1, Float:add2;
-	health = PlayerInfo[playerid][pHealth] * 55.0 / 100;
-	armour = PlayerInfo[playerid][pArmor] * 55.0 / 100;
+	health = GetPlayerHealth(playerid, health) * 55.0 / 100;
+	armour = GetPlayerArmour(playerid, armour) * 55.0 / 100;
 
 	add1 = PlayerInfo[playerid][pHunger] * 55.0 / 100;
 	add2 = PlayerInfo[playerid][pThirsty] * 55.0 / 100;
@@ -7557,7 +7561,7 @@ ShowDialogToPlayer(playerid, dialogid)
 	{
 		case DIALOG_REGISTER:
 		{
-        	format(string, sizeof(string), "{FFFFFF}Chao mung toi {F53F3F}}NewCity Roleplay, {FFFFFF}%s.\nCac luu y can biet khi tham gia may chu:\n- May chu theo the loai RP, nen ban can nam ro ve luat RP.\n\
+        	format(string, sizeof(string), "{FFFFFF}Chao mung toi {F53F3F}NewCity Roleplay, {FFFFFF}%s.\nCac luu y can biet khi tham gia may chu:\n- May chu theo the loai RP, nen ban can nam ro ve luat RP.\n\
         	- Hay co y thuc khi tham gia may chi New City.\n\
         	- Neu cac thac mac gi hay lien he den quan tri vien.\n\
         	- Trang chu: New-City.Net\n\
@@ -13868,24 +13872,43 @@ public TutorialTimer(playerid, stage)
  				TextDrawSetString(Tutorial[2], string);
 
 				PlayerInfo[playerid][pTutorialTimer] = SetTimerEx("TutorialTimer", 15000, false, "ii", playerid, 11);
-			}
-			case 11:
+			}*/
+			case 10:
 			{
+				ClearChat(playerid);
+				TogglePlayerSpectating(playerid, 0);
+    			TogglePlayerControllable(playerid, 0);
 				HideTutorialTextDraws(playerid);
-				SetPlayerPos(playerid, 1357.3593, 252.4489, 19.5669, 68.4006); //noi nguoi choi chon skin
-				SetPlayerVirtualWorld(playerid, 50); //vw khi nguoi choi chon skin
-				SetPlayerCameraPos(playerid, 1352.9169, 255.6082, 18.7); //Cameara pos
-				SetPlayerCameraLookAt(playerid, 1357.3593, 252.4489, 19.5669, 68.4006); 
+				SetPlayerPos(playerid, 2178.0269,-744.9962,1502.0211); //noi nguoi choi chon skin
+				SetPlayerFacingAngle(playerid, 250.6201);
+				SetPlayerVirtualWorld(playerid, 0); //vw khi nguoi choi chon skin
+				SetPlayerCameraPos(playerid, 2180.9819,-746.3520,1502.0032); //Cameara pos
+				SetPlayerCameraLookAt(playerid, 2178.0269,-744.9962,1502.0211);
+				SendClientMessage(playerid, COLOR_LIGHTRED, "[He thong]{FFFFFF} Vui long chon trang phuc cho nhan vat");
 				switch(PlayerInfo[playerid][pGender])
 				{
-					case 1: SetPlayerSkin(playerid, 2);
-					case 2: SetPlayerSkin(playerid, 9);
+					case 1: 
+					{
+						SetPlayerSkin(playerid, 2);
+						ChooseSkin[playerid] = 2;
+					}
+					case 2:
+					{ 
+						SetPlayerSkin(playerid, 9);
+						ChooseSkin[playerid] = 9;
+					}
 
 				}   
-				for(new i;i<6;i++)TextDrawShowForPlayer(playerid,SelectSkin[i]);
-				SelectTextDraw(playerid, 0xFF4040AA);
+				
+				TextDrawShowForPlayer(playerid, SelectSkin[0]);
+				TextDrawShowForPlayer(playerid, SelectSkin[1]);
+				TextDrawShowForPlayer(playerid, SelectSkin[2]);
+				TextDrawShowForPlayer(playerid, SelectSkin[3]);
+				TextDrawShowForPlayer(playerid, SelectSkin[4]);
+				TextDrawShowForPlayer(playerid, SelectSkin[5]);
+				SelectTextDraw(playerid, 0xFF6347FF);
 			}
-			*/case 11:
+			case 11:
 			{
 				ClearChat(playerid);
 			    PlayerInfo[playerid][pTutorial] = 0;
@@ -13899,13 +13922,20 @@ public TutorialTimer(playerid, stage)
 			    PlayerInfo[playerid][pCzID] = random(799999) + 199999;
 			   	SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
                 HideTutorialTextDraws(playerid);
-                SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
-			    SetPlayerPos(playerid, 1357.3593, 252.4489, 19.5669);
-			    SetPlayerFacingAngle(playerid, 25.0000);
+			    SetPlayerPos(playerid, 1357.0499,252.4187,19.5669);
+			    SetPlayerFacingAngle(playerid, 66.4155);
 			    SetPlayerVirtualWorld(playerid, 0);
 			    SetCameraBehindPlayer(playerid);
 			    StopAudioStreamForPlayer(playerid);
 			    TogglePlayerControllable(playerid, 1);
+			    ChooseSkin[playerid] = 0;
+			    
+				TextDrawHideForPlayer(playerid, SelectSkin[0]);
+				TextDrawHideForPlayer(playerid, SelectSkin[1]);
+				TextDrawHideForPlayer(playerid, SelectSkin[2]);
+				TextDrawHideForPlayer(playerid, SelectSkin[3]);
+				TextDrawHideForPlayer(playerid, SelectSkin[4]);
+				TextDrawHideForPlayer(playerid, SelectSkin[5]);
 
 				mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET setup = 0, czid = %i, hours = %i, materials = %i, cash = %i, bank = %i,  gender = %i, age = %i, skin = %i, hunger = %i, thirsty = %i WHERE uid = %i", PlayerInfo[playerid][pCzID], PlayerInfo[playerid][pHours], PlayerInfo[playerid][pMaterials], PlayerInfo[playerid][pCash], PlayerInfo[playerid][pBank], PlayerInfo[playerid][pGender], PlayerInfo[playerid][pAge], PlayerInfo[playerid][pSkin], PlayerInfo[playerid][pHunger], PlayerInfo[playerid][pThirsty], PlayerInfo[playerid][pID]);
 				mysql_tquery(connectionID, queryBuffer);
@@ -14426,16 +14456,19 @@ public SecondTimer()
 			{
 	    		TeleportToPlayer(i, PlayerInfo[i][pDraggedBy]);
 			}
-			if(PlayerInfo[i][pVIPPackage] > 0 && gettime() > PlayerInfo[i][pVIPTime])
+			if(PlayerInfo[i][pLogged])
 			{
-			    PlayerInfo[i][pVIPPackage] = 0;
-			    PlayerInfo[i][pVIPTime] = 0;
-			    PlayerInfo[i][pSecondJob] = -1;
+				if(PlayerInfo[i][pVIPPackage] > 0 && gettime() > PlayerInfo[i][pVIPTime])
+				{
+				    PlayerInfo[i][pVIPPackage] = 0;
+				    PlayerInfo[i][pVIPTime] = 0;
+				    PlayerInfo[i][pSecondJob] = -1;
 
-			    mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET vippackage = 0, viptime = 0, secondjob = -1 WHERE uid = %i", PlayerInfo[i][pID]);
-			    mysql_tquery(connectionID, queryBuffer);
+				    mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET vippackage = 0, viptime = 0, secondjob = -1 WHERE uid = %i", PlayerInfo[i][pID]);
+				    mysql_tquery(connectionID, queryBuffer);
 
-			    SendClientMessage(i, COLOR_LIGHTRED, "Dang ky VIP cua ban da het han. Ban khong con la VIP nua.");
+				    SendClientMessage(i, COLOR_LIGHTRED, "Dang ky VIP cua ban da het han. Ban khong con la VIP nua.");
+				}
 			}
 			if(PlayerInfo[i][pVIPPackage] < 2 && PlayerInfo[i][pSecondJob] != JOB_NONE)
 			{
@@ -20010,12 +20043,21 @@ public OnQueryFinished(threadid, extraid)
 			   	    PlayerInfo[extraid][pCzID] = random(799999) + 199999;
         	        HideTutorialTextDraws(extraid);
     	            SetPlayerSkin(extraid, PlayerInfo[extraid][pSkin]);
-				    SetPlayerPos(extraid, 1357.3593, 252.4489, 19.5669);
-				    SetPlayerFacingAngle(extraid, 25.0000);
+				    SetPlayerPos(extraid, 1357.0499,252.4187,19.5669);
+				    SetPlayerFacingAngle(extraid, 66.4155);
 				    SetPlayerVirtualWorld(extraid, 0);
 				    SetCameraBehindPlayer(extraid);
 				    StopAudioStreamForPlayer(extraid);
 			    	TogglePlayerControllable(extraid, 1);
+
+				    ChooseSkin[extraid] = 0;
+				    
+					TextDrawHideForPlayer(extraid, SelectSkin[0]);
+					TextDrawHideForPlayer(extraid, SelectSkin[1]);
+					TextDrawHideForPlayer(extraid, SelectSkin[2]);
+					TextDrawHideForPlayer(extraid, SelectSkin[3]);
+					TextDrawHideForPlayer(extraid, SelectSkin[4]);
+					TextDrawHideForPlayer(extraid, SelectSkin[5]);
 
 					mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET setup = 0, czid = %i, hours = %i, materials = %i, cash = %i, bank = %i,  gender = %i, age = %i, skin = %i, hunger = %i, thirsty = %i WHERE uid = %i", PlayerInfo[extraid][pCzID], PlayerInfo[extraid][pHours], PlayerInfo[extraid][pMaterials], PlayerInfo[extraid][pCash], PlayerInfo[extraid][pBank], PlayerInfo[extraid][pGender], PlayerInfo[extraid][pAge], PlayerInfo[extraid][pSkin], PlayerInfo[extraid][pHunger], PlayerInfo[extraid][pThirsty], PlayerInfo[extraid][pID]);
 					mysql_tquery(connectionID, queryBuffer);
@@ -20904,6 +20946,80 @@ public OnPlayerConnect(playerid)
 	PlayerTextDrawColor(playerid, PlayerInfo[playerid][pText][9], -1);
 	PlayerTextDrawSetOutline(playerid, PlayerInfo[playerid][pText][9], 1);
 	PlayerTextDrawSetProportional(playerid, PlayerInfo[playerid][pText][9], 1);
+
+
+	SelectSkin[0] = TextDrawCreate(270.999938, 353.281402, "LD_SPAC:white");
+	TextDrawLetterSize(SelectSkin[0], 0.000000, 0.000000);
+	TextDrawTextSize(SelectSkin[0], 103.000000, 42.000000);
+	TextDrawAlignment(SelectSkin[0], 1);
+	TextDrawColor(SelectSkin[0], 606348543);
+	TextDrawSetShadow(SelectSkin[0], 0);
+	TextDrawSetOutline(SelectSkin[0], 0);
+	TextDrawBackgroundColor(SelectSkin[0], 255);
+	TextDrawFont(SelectSkin[0], 4);
+	TextDrawSetProportional(SelectSkin[0], 0);
+	TextDrawSetShadow(SelectSkin[0], 0);
+
+	SelectSkin[1] = TextDrawCreate(243.999862, 342.911102, "ld_beat:chit");
+	TextDrawLetterSize(SelectSkin[1], 0.000000, 0.000000);
+	TextDrawTextSize(SelectSkin[1], 49.000000, 64.000000);
+	TextDrawAlignment(SelectSkin[1], 1);
+	TextDrawColor(SelectSkin[1], 606348543);
+	TextDrawSetShadow(SelectSkin[1], 0);
+	TextDrawSetOutline(SelectSkin[1], 0);
+	TextDrawBackgroundColor(SelectSkin[1], 255);
+	TextDrawFont(SelectSkin[1], 4);
+	TextDrawSetProportional(SelectSkin[1], 0);
+	TextDrawSetShadow(SelectSkin[1], 0);
+
+	SelectSkin[2] = TextDrawCreate(352.666503, 342.081573, "ld_beat:chit");
+	TextDrawLetterSize(SelectSkin[2], 0.000000, 0.000000);
+	TextDrawTextSize(SelectSkin[2], 49.000000, 65.000000);
+	TextDrawAlignment(SelectSkin[2], 1);
+	TextDrawColor(SelectSkin[2], 606348543);
+	TextDrawSetShadow(SelectSkin[2], 0);
+	TextDrawSetOutline(SelectSkin[2], 0);
+	TextDrawBackgroundColor(SelectSkin[2], 255);
+	TextDrawFont(SelectSkin[2], 4);
+	TextDrawSetProportional(SelectSkin[2], 0);
+	TextDrawSetShadow(SelectSkin[2], 0);
+
+	SelectSkin[3] = TextDrawCreate(254.666564, 359.244567, "<<");
+	TextDrawLetterSize(SelectSkin[3], 0.378333, 3.562072);
+	TextDrawAlignment(SelectSkin[3], 1);
+	TextDrawColor(SelectSkin[3], -634441729);
+	TextDrawSetShadow(SelectSkin[3], 0);
+	TextDrawSetOutline(SelectSkin[3], 0);
+	TextDrawBackgroundColor(SelectSkin[3], 255);
+	TextDrawFont(SelectSkin[3], 1);
+	TextDrawSetProportional(SelectSkin[3], 1);
+	TextDrawSetShadow(SelectSkin[3], 0);
+	TextDrawSetSelectable(SelectSkin[3], 1);
+
+	SelectSkin[4] = TextDrawCreate(370.666595, 359.244537, ">>");
+	TextDrawLetterSize(SelectSkin[4], 0.378333, 3.562072);
+	TextDrawAlignment(SelectSkin[4], 1);
+	TextDrawColor(SelectSkin[4], -634441729);
+	TextDrawSetShadow(SelectSkin[4], 0);
+	TextDrawSetOutline(SelectSkin[4], 0);
+	TextDrawBackgroundColor(SelectSkin[4], 255);
+	TextDrawFont(SelectSkin[4], 1);
+	TextDrawSetProportional(SelectSkin[4], 1);
+	TextDrawSetShadow(SelectSkin[4], 0);
+	TextDrawSetSelectable(SelectSkin[4], 1);
+
+	SelectSkin[5] = TextDrawCreate(307.333312, 361.162963, "ld_beat:chit");
+	TextDrawLetterSize(SelectSkin[5], 0.000000, 0.000000);
+	TextDrawTextSize(SelectSkin[5], 27.000000, 30.000000);
+	TextDrawAlignment(SelectSkin[5], 1);
+	TextDrawColor(SelectSkin[5], -148297217);
+	TextDrawSetShadow(SelectSkin[5], 0);
+	TextDrawSetOutline(SelectSkin[5], 0);
+	TextDrawBackgroundColor(SelectSkin[5], 255);
+	TextDrawFont(SelectSkin[5], 4);
+	TextDrawSetProportional(SelectSkin[5], 0);
+	TextDrawSetShadow(SelectSkin[5], 0);
+	TextDrawSetSelectable(SelectSkin[5], 1);
 
 	Streamer_ToggleIdleUpdate(playerid, true);
 	GetPlayerName(playerid, PlayerInfo[playerid][pUsername], MAX_PLAYER_NAME);
@@ -22063,16 +22179,15 @@ public OnPlayerSpawn(playerid)
 	    	PlayerInfo[playerid][pTutorial] = 0;
 		}
 
-	    SetPlayerPos(playerid, 1312.8910,337.8670,-58.3054);
-	    SetPlayerCameraPos(playerid, 1299.5972,320.3192,71.7217);
-		SetPlayerCameraLookAt(playerid, 1349.5016,288.6782,43.9138);
+		SetPlayerPos(playerid, 2178.0269,-744.9962,1502.0211); //noi nguoi choi chon skin
+		SetPlayerFacingAngle(playerid, 250.6201);
+		SetPlayerVirtualWorld(playerid, 0); //vw khi nguoi choi chon skin
+		SetPlayerCameraPos(playerid, 2180.9819,-746.3520,1502.0032); //Cameara pos
+		SetPlayerCameraLookAt(playerid, 2178.0269,-744.9962,1502.0211);
 		TogglePlayerControllable(playerid, false);
 
 		ShowDialogToPlayer(playerid, DIALOG_GENDER);
 		StopAudioStreamForPlayer(playerid);
-
-		SendClientMessage(playerid, COLOR_WHITE, "Chao mung toi {6FD497}NewCity Roleplay{FFFFFF}. Ban da dang ky tai khoan cua minh thanh cong tren may chu.");
-		SendClientMessage(playerid, COLOR_WHITE, "Truoc khi co the choi, ban phai dien mot so thong tin sau do xem huong dan ngan gon.");
 	}
 	else if(PlayerInfo[playerid][pJailTime] > 0)
 	{
@@ -25887,7 +26002,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid) 
 {
-    if(Text:INVALID_TEXT_DRAW == clickedid)//textdraw is invalid (clicked)
+	if(Text:INVALID_TEXT_DRAW == clickedid)//textdraw is invalid (clicked)
     {
         if(GetPVarInt(playerid, "CitizenID") == 1) {
         	for(new i=0;i<8;i++)
@@ -25906,7 +26021,172 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
             return 1;
         }
     }
-    return 1;
+	if(clickedid == SelectSkin[3])
+	{
+		if(PlayerInfo[playerid][pGender] == 1)
+		{
+			if(ChooseSkin[playerid] == 2)
+			{
+				SetPlayerSkin(playerid, 20);
+				ChooseSkin[playerid] = 20;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 20)
+			{
+				SetPlayerSkin(playerid, 22);
+				ChooseSkin[playerid] = 22;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 22)
+			{
+				SetPlayerSkin(playerid, 29);
+				ChooseSkin[playerid] = 29;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 29)
+			{
+				SetPlayerSkin(playerid, 37);
+				ChooseSkin[playerid] = 37;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 37)
+			{
+				SetPlayerSkin(playerid, 2);
+				ChooseSkin[playerid] = 2;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+		}
+		if(PlayerInfo[playerid][pGender] == 2)
+		{
+			if(ChooseSkin[playerid] == 9)
+			{
+				SetPlayerSkin(playerid, 12);
+				ChooseSkin[playerid] = 12;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 12)
+			{
+				SetPlayerSkin(playerid, 13);
+				ChooseSkin[playerid] = 13;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 13)
+			{
+				SetPlayerSkin(playerid, 40);
+				ChooseSkin[playerid] = 40;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 40)
+			{
+				SetPlayerSkin(playerid, 41);
+				ChooseSkin[playerid] = 41;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 41)
+			{
+				SetPlayerSkin(playerid, 9);
+				ChooseSkin[playerid] = 9;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+		}
+	}
+	if(clickedid == SelectSkin[4])
+	{
+		if(PlayerInfo[playerid][pGender] == 1)
+		{
+			if(ChooseSkin[playerid] == 2)
+			{
+				SetPlayerSkin(playerid, 37);
+				ChooseSkin[playerid] = 37;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+                return 1;
+			}
+			if(ChooseSkin[playerid] == 37)
+			{
+				SetPlayerSkin(playerid, 29);
+				ChooseSkin[playerid] = 29;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 29)
+			{
+				SetPlayerSkin(playerid, 22);
+				ChooseSkin[playerid] = 22;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 22)
+			{
+				SetPlayerSkin(playerid, 20);
+				ChooseSkin[playerid] = 20;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 20)
+			{
+				SetPlayerSkin(playerid, 2);
+				ChooseSkin[playerid] = 2;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+		}
+		if(PlayerInfo[playerid][pGender] == 2)
+		{
+			if(ChooseSkin[playerid] == 9)
+			{
+				SetPlayerSkin(playerid, 41);
+				ChooseSkin[playerid] = 41;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 41)
+			{
+				SetPlayerSkin(playerid, 40);
+				ChooseSkin[playerid] = 40;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 40)
+			{
+				SetPlayerSkin(playerid, 13);
+				ChooseSkin[playerid] = 13;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 13)
+			{
+				SetPlayerSkin(playerid, 12);
+				ChooseSkin[playerid] = 12;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+			if(ChooseSkin[playerid] == 12)
+			{
+				SetPlayerSkin(playerid, 9);
+				ChooseSkin[playerid] = 9;
+				PlayerPlaySound(playerid, 17803, 0.0, 0.0, 0.0);
+				return 1;
+			}
+		}
+	}
+	if(clickedid == SelectSkin[5])
+	{
+		PlayerInfo[playerid][pSkin] = ChooseSkin[playerid];
+		PlayerInfo[playerid][pTutorialTimer] = SetTimerEx("TutorialTimer", 10, false, "ii", playerid, 11);
+		CancelSelectTextDraw(playerid);
+		return 1;
+	}
+    return 0;
 }
 
 public Elevator_Boost(floorid)
