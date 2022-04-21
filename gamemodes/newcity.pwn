@@ -43009,7 +43009,7 @@ CMD:buy(playerid, params[])
 	{
 	    case BUSINESS_STORE:
 	    {
-	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($20)\nBo dam ($120)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($20)\nMay anh ($200)\nMay nghe nhac MP3 ($250)\nCan cau ($30)\nMoi cau ca ($10)\nAxit muriatic ($70)\nBaking soda ($70)\nDong ho ($350)\nHe thong GPS ($500)\nCan xang ($100)\nDay thung ($20)\nMat na ($2,000)", "Chon", "Huy bo");
+	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($20)\nBo dam ($80)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($20)\nMay anh ($120)\nMay nghe nhac MP3 ($100)\nCan cau ($30)\nMoi cau ca ($10)\nAxit muriatic ($50)\nBaking soda ($50)\nDong ho ($150)\nHe thong GPS ($250)\nCan xang ($100)\nDay thung ($20)\nMat na ($2,000)", "Chon", "Huy bo");
 		}
 		/*
 		case BUSINESS_GUNSHOP:
@@ -46750,7 +46750,7 @@ CMD:vsafe(playerid, params[])
 
 			    SendClientMessageEx(playerid, COLOR_LIGHTRED, "**{FFFFFF} Ban da luu tru %s trong cop xe cua ban.", FormatNumber(value));
 			}
-			else if(!strcmp(option, "vatlieu", true))
+			/*else if(!strcmp(option, "vatlieu", true))
 			{
 			    if(sscanf(param, "i", value))
 			    {
@@ -46775,7 +46775,7 @@ CMD:vsafe(playerid, params[])
 			    mysql_tquery(connectionID, queryBuffer);
 
 			    SendClientMessageEx(playerid, COLOR_LIGHTRED, "**{FFFFFF} Ban da luu tru %i vat lieu vao cop xe.", value);
-   			}
+   			}*/
 			else if(!strcmp(option, "weed", true))
 			{
 			    if(sscanf(param, "i", value))
@@ -46956,7 +46956,7 @@ CMD:vsafe(playerid, params[])
 
 			    SendClientMessageEx(playerid, COLOR_LIGHTRED, "**{FFFFFF} Ban vua lay %s tu cop xe cua ban.", FormatNumber(value));
 			}
-			else if(!strcmp(option, "vatlieu", true))
+			/*else if(!strcmp(option, "vatlieu", true))
 			{
 			    if(sscanf(param, "i", value))
 			    {
@@ -46981,7 +46981,7 @@ CMD:vsafe(playerid, params[])
 			    mysql_tquery(connectionID, queryBuffer);
 
 			    SendClientMessageEx(playerid, COLOR_LIGHTRED, "**{FFFFFF} Ban vua lay %i vat lieu tu cop xe cua ban.", value);
-   			}
+   			}*/
 			else if(!strcmp(option, "weed", true))
 			{
 			    if(sscanf(param, "i", value))
@@ -53045,7 +53045,7 @@ CMD:drop(playerid, params[])
 	if(sscanf(params, "s[12]S()[10]", option, confirm))
 	{
 	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /drop [tuy chon]");
-	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Materials, Weed, Cocaine, Meth, Painkillers, Cigars, Spraycans");
+	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Weed, Cocaine, Meth, Painkillers, Cigars, Spraycans");
 	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Seeds, Ephedrine, CarLicense, Weapons, AllWeapons, Crate, Pizza");
 	    return 1;
 	}
@@ -53092,7 +53092,7 @@ CMD:drop(playerid, params[])
 		SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da vut chiec thung cua ban di.");
 		return 1;
 	}
-	else if(!strcmp(option, "materials", true))
+	/*else if(!strcmp(option, "materials", true))
 	{
 	    if(!PlayerInfo[playerid][pMaterials])
 	    {
@@ -53108,7 +53108,7 @@ CMD:drop(playerid, params[])
 
 	    mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET materials = 0 WHERE uid = %i", PlayerInfo[playerid][pID]);
 	    mysql_tquery(connectionID, queryBuffer);
-	}
+	}*/
 	else if(!strcmp(option, "weed", true))
 	{
 	    if(!PlayerInfo[playerid][pWeed])
