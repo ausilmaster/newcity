@@ -60,6 +60,8 @@
 #include <YSF>
 #include <samp-plus>
 #include <dini>
+#include <a_actor>
+#include <strlib>
 // --------------------------------------
 //#include <dyn_objects>
 // ---------------------------------------
@@ -152,6 +154,7 @@ new ipa[30];
 // ---------------------------------------
 #define MAX_CAN_SA  100
 #define MAX_COWS 6
+#define MAX_CACTORS 200 //Toi da 200
 // ---------------------------------------
 // --- Function Shortcuts --- //
 #define SCM 	SendClientMessage
@@ -368,6 +371,117 @@ new CSInfo[MAX_CAN_SA][CanSaEnum];
 //du lieu tam thoi
 new Cgetfood[MAX_PLAYERS];
 new FeedingCow[MAX_PLAYERS];
+
+
+enum aInfo
+{
+	aId,
+	Text3D: aTId,
+	aSkin,
+	aAnim,
+	Float:aPosX,
+	Float:aPosY,
+	Float:aPosZ,
+	Float:aPosR,
+	aName[80],
+	aVW,
+	aInt
+}
+
+new ActorsInfo[MAX_CACTORS][aInfo];
+
+CreateActors(actorid)
+{
+	new string[128];
+	format(string, sizeof(string), "{00BFFF}[Actor:%d]\n{FFFFFF}%s",actorid, ActorsInfo[actorid][aName]);
+
+	ActorsInfo[actorid][aId] = CreateActor(ActorsInfo[actorid][aSkin], ActorsInfo[actorid][aPosX], ActorsInfo[actorid][aPosY], ActorsInfo[actorid][aPosZ], ActorsInfo[actorid][aPosR]);
+	ActorsInfo[actorid][aTId] = CreateDynamic3DTextLabel(string, COLOR_WHITE, ActorsInfo[actorid][aPosX], ActorsInfo[actorid][aPosY], ActorsInfo[actorid][aPosZ]+1,10.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, ActorsInfo[actorid][aVW], ActorsInfo[actorid][aInt], -1);
+	switch(ActorsInfo[actorid][aAnim])
+	{
+		case 1: {ApplyActorAnimation(actorid,"ped","SEAT_down",4.0,0,0,0,1,0);}
+		case 2: {ApplyActorAnimation(actorid,"ped","Idlestance_fat",4.0,0,0,0,1,0);}
+		case 3: {ApplyActorAnimation(actorid,"ped","Idlestance_old",4.0,0,0,0,1,0);}
+		case 4: {ApplyActorAnimation(actorid,"POOL","POOL_Idle_Stance",4.0,0,0,0,1,0);}
+		case 5: {ApplyActorAnimation(actorid,"ped","woman_idlestance",4.0,0,0,0,1,0);}
+		case 6: {ApplyActorAnimation(actorid,"ped","IDLE_stance",4.0,0,0,0,1,0);}
+		case 7: {ApplyActorAnimation(actorid,"COP_AMBIENT","Copbrowse_in",4.0,0,0,0,1,0);}
+		case 8: {ApplyActorAnimation(actorid,"COP_AMBIENT","Copbrowse_loop",4.0,0,0,0,1,0);}
+		case 9: {ApplyActorAnimation(actorid,"COP_AMBIENT","Copbrowse_nod",4.0,0,0,0,1,0);}
+		case 10: {ApplyActorAnimation(actorid,"COP_AMBIENT","Copbrowse_out",4.0,0,0,0,1,0);}
+		case 11: {ApplyActorAnimation(actorid,"COP_AMBIENT","Copbrowse_shake",4.0,0,0,0,1,0);}
+		case 12: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_in",4.0,0,0,0,1,0);}
+		case 13: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_loop",4.0,0,0,0,1,0);}
+		case 14: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_nod",4.0,0,0,0,1,0);}
+		case 15: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_out",4.0,0,0,0,1,0);}
+		case 16: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_shake",4.0,0,0,0,1,0);}
+		case 17: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_think",4.0,0,0,0,1,0);}
+		case 18: {ApplyActorAnimation(actorid,"COP_AMBIENT","Coplook_watch",4.0,0,0,0,1,0);}
+	}
+}
+
+LoadActors()
+{
+	new arrCoords[25][64];
+	new strFromFile2[256];
+	new File: file = fopen("actors.cfg", io_read);
+	if (file)
+	{
+		new idx;
+		while (idx < sizeof(ActorsInfo))
+		{
+			fread(file, strFromFile2);
+			split(strFromFile2, arrCoords, '|');
+	  		ActorsInfo[idx][aId] = strval(arrCoords[0]);
+	  		ActorsInfo[idx][aSkin] = strval(arrCoords[1]);
+	  		ActorsInfo[idx][aAnim] = strval(arrCoords[2]);
+	  		ActorsInfo[idx][aPosX] = floatstr(arrCoords[3]);
+	  		ActorsInfo[idx][aPosY] = floatstr(arrCoords[4]);
+	  		ActorsInfo[idx][aPosZ] = floatstr(arrCoords[5]);
+	  		ActorsInfo[idx][aPosR] = floatstr(arrCoords[6]);
+	  		strmid(ActorsInfo[idx][aName], arrCoords[7], 0, strlen(arrCoords[7]), 80);
+	  		ActorsInfo[idx][aVW] = strval(arrCoords[8]);
+	  		ActorsInfo[idx][aInt] = strval(arrCoords[9]);
+
+	  		if(ActorsInfo[idx][aPosX])
+	  		{
+		  		if(!isnull(ActorsInfo[idx][aName]))
+		  		{
+		  		    CreateActors(idx);
+				}
+			}
+
+			idx++;
+		}
+		fclose(file);
+	}
+	return 1;
+}
+
+SaveActors() {
+
+	new
+		szFileStr[512],
+		File: fHandle = fopen("actors.cfg", io_write);
+
+	for(new iIndex; iIndex < MAX_CACTORS; iIndex++) {
+		format(szFileStr, sizeof(szFileStr), "%d|%d|%d|%f|%f|%f|%f|%s|%d|%d\r\n",
+			ActorsInfo[iIndex][aId],
+			ActorsInfo[iIndex][aSkin],
+			ActorsInfo[iIndex][aAnim],
+			ActorsInfo[iIndex][aPosX],
+			ActorsInfo[iIndex][aPosY],
+			ActorsInfo[iIndex][aPosZ],
+			ActorsInfo[iIndex][aPosR],
+			ActorsInfo[iIndex][aName],
+			ActorsInfo[iIndex][aVW],
+			ActorsInfo[iIndex][aInt]
+		);
+		fwrite(fHandle, szFileStr);
+	}
+	return fclose(fHandle);
+}
+
 //----------------
 
 enum CowInfo //tao mot kieu du lieu
@@ -516,6 +630,7 @@ enum
 	DIALOG_UNREADTEXTS,
 	DIALOG_ATM,
 	DIALOG_GETJOB,
+	DIALOG_CAR,
 	DIALOG_ATMDEPOSIT,
 	DIALOG_ATMWITHDRAW,
 	DIALOG_CHANGEPASS,
@@ -2868,8 +2983,8 @@ enum entranceEnum
 
 new const staticEntrances[][entranceEnum] =
 {
-	{"County General", 	 	 1,  1,  22, true,  2034.2003, -1402.1976, 17.2951, 180.0000, -2330.0376,111.4688,-5.3942, 180.0000},
-	{"Red Country Hospital",  1,  2,  22, true,  1241.8763, 326.8313, 19.7555, 270.0000, -2330.0376,111.4688,-5.3942, 180.0000},
+	{"Red Country Hospital", 	 	 1,  2,  22, true,  1241.8763, 326.8313, 19.7555, 270.0000, -2330.0376,111.4688,-5.3942, 180.0000},
+	{"County General",       1,  1,  22, true,  2034.2003, -1402.1976, 17.2951, 180.0000, -2330.0376,111.4688,-5.3942, 180.0000},
 	{"Temple Bank", 		 5,  3,  52, true,  1382.1488, -1088.6097, 28.2123, 89.0300, 1667.3536, -995.3700, 683.6913, 0.0000},
 	{"City Hall",            3,  4,  0,  true,  1482.6517, -1771.6108, 18.7958, 0.0000,   676.3712, -96.0018, -77.2041, 90.0000},
 	{"Sheriff Department",    2,  5,  30, true,  627.5011, -571.7799, 17.6806, 90.0000,  1553.2065,-1674.0422,2110.5356, 270.0000},
@@ -6891,10 +7006,14 @@ public progress_bar_show(playerid)
 {
 	new Float:health, Float:armour, Float:add1, Float:add2;
 	health = GetPlayerHealth(playerid, health) * 55.0 / 100;
+	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][1], health, 5.000000);
 	armour = GetPlayerArmour(playerid, armour) * 55.0 / 100;
+	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][4], armour, 5.000000);
 
 	add1 = PlayerInfo[playerid][pHunger] * 55.0 / 100;
+	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][21], add1, 5.000000);
 	add2 = PlayerInfo[playerid][pThirsty] * 55.0 / 100;
+	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][25], add2, 5.000000);
 
 	PlayerTextDrawShow(playerid, Custom_Hud[playerid][0]);
 	PlayerTextDrawShow(playerid, Custom_Hud[playerid][1]);
@@ -6916,18 +7035,6 @@ public progress_bar_show(playerid)
 	PlayerTextDrawShow(playerid, Custom_Hud[playerid][27]);
 	PlayerTextDrawShow(playerid, Custom_Hud[playerid][28]);
 	PlayerTextDrawShow(playerid, Custom_Hud[playerid][29]);
-	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][1], health, 5.000000);
-	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][4], armour, 5.000000);
-	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][21], add1, 5.000000);
-	PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][25], add2, 5.000000);
-	if(PlayerInfo[playerid][pHealth] > 100)
-	{
-		PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][1], 55.000000, 5.000000);
-	}
-	if(PlayerInfo[playerid][pHealth] > 100)
-	{
-		PlayerTextDrawTextSize(playerid, Custom_Hud[playerid][4], 55.000000, 5.000000);
-	}
 	return 1;
 }
 //Update Level
@@ -7072,6 +7179,26 @@ public AddToPaycheck(playerid, amount)
 		}
 	}
 }
+
+stock split(const strsrc[], strdest[][], delimiter)
+{
+	new i, li;
+	new aNum;
+	new len;
+	while(i <= strlen(strsrc))
+	{
+		if(strsrc[i] == delimiter || i == strlen(strsrc))
+		{
+			len = strmid(strdest[aNum], strsrc, li, i, 128);
+			strdest[aNum][len] = 0;
+			li = i+1;
+			aNum++;
+		}
+		i++;
+	}
+	return 1;
+}
+
 stock GetPlayerSQLId(playerid)
 {
 	if(PlayerInfo[playerid][pLogged])
@@ -12418,7 +12545,7 @@ Float:GetVehicleSpeed(vehicleid)
 
 	if(GetVehicleVelocity(vehicleid, x, y, z))
 	{
-		return floatsqroot((x * x) + (y * y) + (z * z)) * 181.5;
+		return floatsqroot((x * x) + (y * y) + (z * z)) * 100.0;
 	}
 
 	return 0.0;
@@ -12835,6 +12962,7 @@ stock GetDistanceFromPlayerToTrailer(playerid,carid)
 	}
 	return 200;
 }
+
 
 stock GetPlayerNearestTrailer(playerid)
 {
@@ -13881,7 +14009,8 @@ public TutorialTimer(playerid, stage)
 				HideTutorialTextDraws(playerid);
 				SetPlayerPos(playerid, 2178.0269,-744.9962,1502.0211); //noi nguoi choi chon skin
 				SetPlayerFacingAngle(playerid, 250.6201);
-				SetPlayerVirtualWorld(playerid, 0); //vw khi nguoi choi chon skin
+				new vw = random(1000);
+				SetPlayerVirtualWorld(playerid, vw); //vw khi nguoi choi chon skin
 				SetPlayerCameraPos(playerid, 2180.9819,-746.3520,1502.0032); //Cameara pos
 				SetPlayerCameraLookAt(playerid, 2178.0269,-744.9962,1502.0211);
 				SendClientMessage(playerid, COLOR_LIGHTRED, "[He thong]{FFFFFF} Vui long chon trang phuc cho nhan vat");
@@ -21175,7 +21304,6 @@ public OnGameModeInit()
 
 	}
 
-
 	mysql_tquery(connectionID, "TRUNCATE TABLE shots");
 	mysql_tquery(connectionID, "SELECT * FROM houses", "OnQueryFinished", "ii", THREAD_LOAD_HOUSES, 0);
 	mysql_tquery(connectionID, "SELECT * FROM furniture", "OnQueryFinished", "ii", THREAD_LOAD_FURNITURE, 0);
@@ -21242,20 +21370,15 @@ public OnGameModeInit()
 	// Hospital exit
 	CreateDynamic3DTextLabel("(( /exit ))", COLOR_GREY2, -45.3173, 157.9171, 999.0613, 20.0);
 
-	CreateDynamic3DTextLabel("County General\nGia: $500\n/buyinsurance de xuat vien o day.", COLOR_DOCTOR, -2323.3250,110.9966,-5.3942, 10.0, .worldid = HOSPITAL_COUNTY);
+	CreateDynamic3DTextLabel("County General\nGia: $200\n/muabaohiem de xuat vien o day.", COLOR_DOCTOR, -2323.3250,110.9966,-5.3942, 10.0, .worldid = HOSPITAL_COUNTY);
 	CreateDynamicPickup(1240, 1, -2323.3250,110.9966,-5.3942, .worldid = HOSPITAL_COUNTY);
 
-	CreateDynamic3DTextLabel("Red Country Hospital\nGia: $500\n/buyinsurance de xuat vien o day.", COLOR_DOCTOR, -2323.3250,110.9966,-5.3942, 10.0, .worldid = HOSPITAL_ALLSAINTS);
+	CreateDynamic3DTextLabel("Red Country Hospital\nGia: $200\n/muabaohiem de xuat vien o day.", COLOR_DOCTOR, -2323.3250,110.9966,-5.3942, 10.0, .worldid = HOSPITAL_ALLSAINTS);
 	CreateDynamicPickup(1240, 1, -2323.3250,110.9966,-5.3942, .worldid = HOSPITAL_ALLSAINTS);
 
 	CreateDynamic3DTextLabel("Loading Dock\n{FFFFFF}Nhan {F3E000}N {FFFFFF}\nde lay mot thung hang.", COLOR_YELLOW, 164.0410,-54.5746,1.5781, 10.0);
 	CreateDynamicPickup(1239, 1, 164.0410,-54.5746,1.5781);
 
-	CreateDynamic3DTextLabel("Garbage Pickup\n/garbage\nde bat dau lam viec.", COLOR_YELLOW, 1622.7959,-1825.0040,13.5293, 10.0);
-	CreateDynamicPickup(1239, 1, 1622.7959,-1825.0040,13.5293);
-
-	CreateDynamic3DTextLabel("Cong Cu Sua Xe\n/buycomps de mua.", COLOR_YELLOW, 2330.0369, -2315.4553, 13.5469, 10.0);
-	CreateDynamicPickup(1239, 1, 2330.0369, -2315.4553, 13.5469);
 
 	CreateDynamic3DTextLabel("Thi Bang Lai Xe\nGia: $100\n/thibanglai de bat dau.", COLOR_YELLOW, -2033.2953, -117.4508, 1035.1719, 10.0);
 	CreateDynamicPickup(1239, 1, -2033.2953, -117.4508, 1035.1719);
@@ -21703,6 +21826,7 @@ public OnGameModeInit()
 
 	
     LoadServerInfo();
+    LoadActors();
     //RefreshLoginScreen();
     //RefreshTime();
     ResetEvent();
@@ -22670,81 +22794,6 @@ public OnPlayerEnterCheckpoint(playerid)
 			PlayerInfo[playerid][pCP] = CHECKPOINT_NONE;
 			DisablePlayerCheckpoint(playerid);
 	    }
-		case CHECKPOINT_GARBAGE:
-		{
- 			if(!(GetVehicleModel(GetPlayerVehicleID(playerid)) == 408 && GetPlayerState(playerid) == PLAYER_STATE_DRIVER))
-			    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban can dieu khien Trashmaster.");
-
-		    if(PlayerInfo[playerid][pGarbage] == 1)
-		    {
-                GameTextForPlayer(playerid, "Tai Rac....~n~Vui long doi.", 5000, 3);
-                TogglePlayerControllable(playerid, 0);
-                SetTimerEx("garbagewait", 5000, false, "i", playerid);
-				DisablePlayerCheckpoint(playerid);
-
-				PlayerInfo[playerid][pGarbage] = 2;
-				SetPlayerCheckpoint(playerid, 1138.8413,-1333.5553,13.6871, 5.0);
-			}
-			if(PlayerInfo[playerid][pGarbage] == 2)
-			{
-			    if(IsPlayerInRangeOfPoint(playerid, 5.0, 1138.8413,-1333.5553,13.6871))
-			    {
-	   				GameTextForPlayer(playerid, "Tai Rac....~n~Vui long doi.", 5000, 3);
-	                TogglePlayerControllable(playerid, 0);
-	                SetTimerEx("garbagewait", 5000, false, "i", playerid);
-					DisablePlayerCheckpoint(playerid);
-
-					PlayerInfo[playerid][pGarbage] = 3;
-					SetPlayerCheckpoint(playerid, 2121.7314,-1342.7231,23.9844, 5.0);
-				}
-
-			}
-			if(PlayerInfo[playerid][pGarbage] == 3)
-			{
-   				if(IsPlayerInRangeOfPoint(playerid, 5.0, 2121.7314,-1342.7231,23.9844))
-			    {
-	                GameTextForPlayer(playerid, "Tai Rac....~n~Vui long doi.", 5000, 3);
-	                TogglePlayerControllable(playerid, 0);
-	                SetTimerEx("garbagewait", 5000, false, "i", playerid);
-					DisablePlayerCheckpoint(playerid);
-
-					PlayerInfo[playerid][pGarbage] = 4;
-					SetPlayerCheckpoint(playerid, 1920.7303,-1791.3890,13.3828, 5.0);
-				}
-			}
-			if(PlayerInfo[playerid][pGarbage] == 4)
-			{
-   				if(IsPlayerInRangeOfPoint(playerid, 5.0, 1920.7303,-1791.3890,13.3828))
-			    {
-	                GameTextForPlayer(playerid, "Tai Rac....~n~Vui long doi.", 5000, 3);
-	                TogglePlayerControllable(playerid, 0);
-	                SetTimerEx("garbagewait", 5000, false, "i", playerid);
-					DisablePlayerCheckpoint(playerid);
-
-					PlayerInfo[playerid][pGarbage] = 5;
-					SetPlayerCheckpoint(playerid, 1637.1412,-1794.4941,13.5223, 5.0);
-				}
-
-			}
-			if(PlayerInfo[playerid][pGarbage] == 5)
-			{
-   				if(IsPlayerInRangeOfPoint(playerid, 5.0, 1637.1412,-1794.4941,13.5223))
-			    {
-					GameTextForPlayer(playerid, "Don Rac....~n~Vui long doi.", 5000, 3);
-					PlayerInfo[playerid][pGarbage] = 0;
-					DisablePlayerCheckpoint(playerid);
-
-					new amount = 1000 + random(500);
-					PlayerInfo[playerid][pCash] = PlayerInfo[playerid][pCash] + amount;
-					SendClientMessageEx(playerid, COLOR_AQUA, "Paycheck: Ban da kiem duoc $%i cho thoi gian lam viec don rac.", amount);
-
-					PlayerInfo[playerid][pCP] = CHECKPOINT_NONE;
-
-	   				mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET cash = %i WHERE uid = %i", PlayerInfo[playerid][pCash], PlayerInfo[playerid][pID]);
-					mysql_tquery(connectionID, queryBuffer);
-				}
-			}
-		}
 
 	    default:
 	    {
@@ -24315,7 +24364,7 @@ public UpdateSpeedo()
 
 				SetVehicleParams(vehicleid, VEHICLE_ENGINE, 0);
 	       		//SendClientMessage(playerid, COLOR_RED, "The engine has shut down for being totalled and needs repairing.");
-	       		GameTextForPlayer(playerid, "~r~Tong dong co", 3000, 3);
+	       		GameTextForPlayer(playerid, "~r~Phuong tien bi hong", 3000, 3);
 		    }
 		    /*
 			damage = (1000.0 - health) / 7.0;
@@ -24494,7 +24543,7 @@ public OnPlayerText(playerid, text[])
 			new string[128];
 			format(string,sizeof(string),"{AA3333}AdmWarning{FFFF00}: %s (ID: %d) co the quang cao may chu: '{AA3333}%s{FFFF00}'.", GetPlayerNameEx(playerid), playerid, text);
 			SendAdminMessage(COLOR_YELLOW, string, 2);
-			//Log_Write("logs/hack.log", string);
+			//Log_Write("logs/hack.txt", string);
 			SendClientMessage(playerid, COLOR_LIGHTRED, "Tro chuyen cua ban bi chan, ban da tu dong bao cao ve quang cao tren may chu.");
         	if(++PlayerInfo[playerid][pAdvertWarnings] > MAX_ANTICHEAT_WARNINGS)
         	{
@@ -24738,7 +24787,7 @@ public OnPlayerCommandReceived(playerid, cmd[], params[], flags)
 		new string[128];
 		format(string,sizeof(string),"{AA3333}AdmWarning{FFFF00}: %s (ID: %d) co the quang cao may chu: '{AA3333}/%s %s{FFFF00}'.", GetPlayerNameEx(playerid), playerid, cmd, params);
 		SendAdminMessage(COLOR_YELLOW, string, 2);
-		//Log_Write("logs/hack.log", string);
+		//Log_Write("logs/hack.txt", string);
 		SendClientMessage(playerid, COLOR_LIGHTRED, "Lenh cua ban da bi chan, ban da tu dong bao cao ve quang cao may chu.");
         PlayerInfo[playerid][pAdvertWarnings] ++;
 		return 0;
@@ -24928,7 +24977,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.0, -86.0914, -31.2349, 3.1094))
 		{
-			if(Cgetfood[playerid] == 0)
+			if(Cgetfood[playerid] == 0 && FarmerDuty[playerid] == 1)
 			{
 				Cgetfood[playerid] = 1;
 				SetPlayerAttachedObject(playerid, 0, 2901, 6, 0.0000, 0.0459, -0.3159, 0.0000, 91.7999, -25.6000, 1.0000, 1.0000, 1.0000, 0xFFFFFFFF, 0xFFFFFFFF);
@@ -24937,6 +24986,11 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /drop [thucan].");
 			}
 		}
+        if(!GateCheck(playerid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+        {
+        	ShowPlayerDialog(playerid, DIALOG_CAR, DIALOG_STYLE_LIST, "Bang dieu khien phuong tien", "{e63333}[1]{ffffff} Dong co\n{e63333}[2]{ffffff} Day an toan\n{e63333}[3]{ffffff} Den xe\n\
+        		                                                                                         {e63333}[4]{ffffff} Mui xe\n{e63333}[5]{ffffff} Cop xe\n{e63333}[6]{ffffff} Thong tin xe", "Chon", "Dong");
+        }
 	}
 	if(newkeys & KEY_SECONDARY_ATTACK)
 	{
@@ -25291,14 +25345,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				}
 			}
 
-			PlayerInfo[playerid][pLastPress] = time; // Prevents spamming. Sometimes keys get messed up and register twice.
-		}
-		if(newkeys & KEY_YES)
- 		{
- 		    if(!GateCheck(playerid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
- 		    {
-		  		callcmd::engine(playerid, "\1");
-			}
 			PlayerInfo[playerid][pLastPress] = time; // Prevents spamming. Sometimes keys get messed up and register twice.
 		}
 	}
@@ -37500,24 +37546,7 @@ CMD:settime(playerid, params[])
 	return 1;
 }
 
-CMD:setwanted(playerid, params[])
-{
-	new targetid, level;
-	if(PlayerInfo[playerid][pAdmin] < 7)
-	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co quyen su dung lenh nay.");
-	}
-	if(sscanf(params, "ud", targetid, level))
-	{
-		return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /setwanted [playerid] [level]");
-	}
-	PlayerInfo[playerid][pWantedLevel] = level;
-	SendClientMessageEx(targetid, COLOR_LIGHTRED, "[Canh bao] {FFFFFF}Cap do truy na cua ban da duoc quan tri vien chinh thanh %d.", level);
-	SendClientMessageEx(playerid, COLOR_LIGHTRED, "[Admin] Ban da chinh cap do truy na cua %s thanh %d", GetPlayerNameEx(targetid), level);
-    mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET wantedlevel = %i WHERE uid = %i", PlayerInfo[playerid][pWantedLevel], PlayerInfo[targetid][pID]);
-    mysql_tquery(connectionID, queryBuffer);
-	return 1;
-}
+
 //hoang viet hoa 100%
 CMD:setstat(playerid, params[])
 {
@@ -50950,7 +50979,7 @@ CMD:stretcher(playerid, params[])
 	return 1;
 }
 
-CMD:deliverpatient(playerid, params[])
+CMD:capcuu(playerid, params[])
 {
 	new targetid, amount = 2000;
 
@@ -50960,9 +50989,9 @@ CMD:deliverpatient(playerid, params[])
 	}
 	if(sscanf(params, "u", targetid))
 	{
-	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /deliverpatient [playerid]");
+	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /capcuu [playerid]");
 	}
-    if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2007.6256, -1410.2455, 16.9922) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1147.3577, -1345.3729, 13.6328) && !IsPlayerInRangeOfPoint(playerid, 5.0, 2070.4307, -1422.8580, 48.331) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1161.1458,-1364.4767,26.6485)
+    if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1224.4105, 306.6262, 19.6701) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1147.3577, -1345.3729, 13.6328) && !IsPlayerInRangeOfPoint(playerid, 5.0, 2070.4307, -1422.8580, 48.331) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1161.1458,-1364.4767,26.6485)
 	&& !IsPlayerInRangeOfPoint(playerid, 5.0, 1510.7773, -2151.7322, 13.7483) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1480.4819, -2166.9712, 35.2578) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1539.1060, -2167.2058, 35.2578))
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o pham vi khu vuc cap cuu benh nhan.");
@@ -50989,7 +51018,7 @@ CMD:deliverpatient(playerid, params[])
 	PlayerInfo[targetid][pDelivered] = 0;
 	PlayerInfo[playerid][pTotalPatients]++;
 
-	if(IsPlayerInRangeOfPoint(playerid, 5.0, 2007.6256, -1410.2455, 16.9922) || IsPlayerInRangeOfPoint(playerid, 5.0, 2070.4307,-1422.8580,48.331))
+	if(IsPlayerInRangeOfPoint(playerid, 5.0, 1224.4105, 306.6262, 19.6701))
 	{
 	    SetPlayerVirtualWorld(targetid, HOSPITAL_COUNTY);
 	}
@@ -51125,7 +51154,7 @@ CMD:loadpt(playerid, params[])
 }
 CMD:deliverpt(playerid, params[])
 {
-	return callcmd::deliverpatient(playerid, params);
+	return callcmd::capcuu(playerid, params);
 }
 CMD:movept(playerid, params[])
 {
@@ -59099,36 +59128,241 @@ CMD:farmer(playerid, params[])
 	}
 	return 1;
 }
-/*forward DCC_OnChannelMessage(DCC_Channel:channel, DCC_User:author, const message[]);
-forward SendDiscordMessage(channel[], const fmat[], va_args<>);
 
-public SendDiscordMessage(channel[], const fmat[], va_args<>)
+CMD:createactor(playerid, params[])
 {
-    new str[145];
-    va_format(str, sizeof (str), fmat, va_start<2>);
-    BotChannel = DCC_FindChannelById(channel);
-    return DCC_SendChannelMessage(BotChannel, str);
+	new skin, name[80];
+ 	if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+	if(sscanf(params, "is[80]", skin, name)) return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /createactor [skinid] [ten]");
+	new Float:X,Float:Y,Float:Z;
+	for(new idx=0; idx<MAX_CACTORS; idx++)
+	{
+	    if(!ActorsInfo[idx][aSkin])
+	    {
+	        GetPlayerPos(playerid, ActorsInfo[idx][aPosX], ActorsInfo[idx][aPosY], ActorsInfo[idx][aPosZ]);
+			GetPlayerFacingAngle(playerid, ActorsInfo[idx][aPosR]);
+			GetPlayerPos(playerid, X,Y,Z);
+			SetPlayerPos(playerid, X,Y,Z+5);
+  			ActorsInfo[idx][aSkin] = skin;
+			format(ActorsInfo[idx][aName], 80, "%s", name);
+			CreateActors(idx);
+			SendAdminMessage(COLOR_LIGHTRED, "AdmCmd: %s da tao ra mot Actor ID %d. (Skin: %d - Ten: %s)", GetPlayerNameEx(playerid), idx, skin, name);
+			idx = MAX_CACTORS;
+            
+            new szFileStr[200],
+                File: fHandle = fopen("logs/actors.txt", io_write);
+			format(szFileStr, sizeof(szFileStr), "[Actor] %s da tao ra mot Actor ID %i (Skin: %i - Ten: %s)", GetPlayerNameEx(playerid), idx, skin, name);
+			fwrite(fHandle, szFileStr);
+			SaveActors();
+		}
+	}
+	return 1;
 }
-public DCC_OnChannelMessage(DCC_Channel:channel, DCC_User:author, const message[])
+//xem actor da tao
+CMD:actors(playerid, params[])
 {
-    new channel_name[100 + 1];
-    if(!DCC_GetChannelName(channel, channel_name))
-        return 0;
-
-    new user_name[32 + 1];
-    if (!DCC_GetUserName(author, user_name))
-        return 0;
-
-    if(channel != BotChannel) return 0;
-    new str[145];
-    format(str, sizeof str, "{667aca}[Discord/%s] %s:{ffffff} %s", channel_name, user_name, message);
-    for(new i = 0; i < MAX_PLAYERS; i++) {
-    if (DiscordStats[i]==0) continue;
-    SendClientMessage(i, -1, str); }
-
-    return 1;
+	new string[128];
+ 	if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+	SendClientMessage(playerid, COLOR_YELLOW, "[Actor da tao ra]:");
+	for(new idx=0; idx<MAX_CACTORS; idx++)
+	{
+	    if(ActorsInfo[idx][aId])
+	    {
+			format(string, sizeof(string), "ID: %d | Skin: %d | VW: %d | Int: %d", idx, ActorsInfo[idx][aSkin], ActorsInfo[idx][aVW], ActorsInfo[idx][aInt]);
+			SendClientMessage(playerid, COLOR_WHITE, string);
+	    }
+	}
+	return 1;
 }
-*/
+//goto actor
+CMD:gotoa(playerid, params[])
+{
+    new idx, string[128];
+ 	if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+	if(sscanf(params, "i", idx)) return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /gotoa [actorid]");
+	if(!ActorsInfo[idx][aId]) return SendClientMessage(playerid, COLOR_GREY, "ERROR: Invalid actors id.");
+	SetPlayerPos(playerid, ActorsInfo[idx][aPosX], ActorsInfo[idx][aPosY], ActorsInfo[idx][aPosZ]);
+	format(string, sizeof(string), "{B0C4DE}Dich chuyen: {FFFFFF}Ban da dich chuyen den Actor ID %d.", idx);
+	SendClientMessage(playerid, COLOR_WHITE, string);
+	return 1;
+}
+//chinh sua ten actor
+CMD:acname(playerid, params[])
+{
+    if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+
+	new actorid, actorname[128];
+
+	if(sscanf(params, "ds[128]", actorid, actorname)) return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /acname [actorid] [ten]");
+
+	format(ActorsInfo[actorid][aName], 80, "%s", actorname);
+	SendClientMessage(playerid, COLOR_LIGHTRED, "[Actor]{FFFFFF} Ban da thay doi ten cua Actor!");
+	if(IsValidActor(ActorsInfo[actorid][aId])) DestroyActor(ActorsInfo[actorid][aId]);
+	if(IsValidDynamic3DTextLabel(ActorsInfo[actorid][aTId])) DestroyDynamic3DTextLabel(ActorsInfo[actorid][aTId]);
+	CreateActors(actorid);
+	SaveActors();
+
+    new szFileStr[200],
+        File: fHandle = fopen("logs/actoredit.txt", io_write);
+	format(szFileStr, sizeof(szFileStr), "[Actor] %s da chinh sua ten cua Actor [ID:%d] thanh %s.", GetPlayerNameEx(playerid), actorid, actorname);
+	fwrite(fHandle, szFileStr);
+	return 1;
+}
+
+//Actor trong khoang cach 30m (co the chinh sua)
+
+CMD:anear(playerid, params[])
+{
+ 	if(PlayerInfo[playerid][pAdmin] > 6 || PlayerInfo[playerid][pDynamicAdmin])
+	{
+		SendClientMessage(playerid, COLOR_WHITE, "[Actor] Tat ca Actor xung quanh ban trong pham vi 30m");
+		for(new i;i<MAX_CACTORS;i++)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 30, ActorsInfo[i][aPosX], ActorsInfo[i][aPosY], ActorsInfo[i][aPosZ]))
+			{
+			    new string[128];
+			   	format(string, sizeof(string), "[ID:%d] | Khoang cach: %f ", i, GetPlayerDistanceFromPoint(playerid, ActorsInfo[i][aPosX], ActorsInfo[i][aPosY], ActorsInfo[i][aPosZ]));
+			   	SendClientMessage(playerid, COLOR_WHITE, string);
+   			}
+		}
+	}
+	else
+	{
+	    SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+	}
+	return 1;
+}
+
+//Tao hanh dong cho actor
+
+CMD:acanim(playerid, params[])
+{
+    if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+
+    SendClientMessage(playerid, COLOR_LIGHTRED, "Chuc nang nay dang bao tri");
+
+	
+	return 1;
+}
+
+CMD:aedit(playerid, params[])
+{
+    if(PlayerInfo[playerid][pAdmin] < 7 || !PlayerInfo[playerid][pDynamicAdmin]) return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay.");
+
+	new string[128], choice[32], actorid, amount;
+	if(sscanf(params, "s[32]dD", choice, actorid, amount))
+	{
+		SendClientMessage(playerid, COLOR_WHITE, "Su dung: /aedit [tuy chon] [actorid] [chi so]");
+		SendClientMessage(playerid, COLOR_WHITE, "Co san: /acname, /acanim, Exterior, Skin, Delete, Refresh, Clearanim");
+		return 1;
+	}
+
+	if(actorid >= MAX_CACTORS)
+	{
+		SendClientMessage(playerid, COLOR_LIGHTRED, "Actor ID khong hop le.");
+		return 1;
+	}
+
+	if(strcmp(choice, "exterior", true) == 0)
+	{
+  		if(ActorsInfo[actorid][aPosX])
+  		{
+	  		if(!isnull(ActorsInfo[actorid][aName]))
+	  		{
+				GetPlayerPos(playerid, ActorsInfo[actorid][aPosX], ActorsInfo[actorid][aPosY], ActorsInfo[actorid][aPosZ]);
+				GetPlayerFacingAngle(playerid, ActorsInfo[actorid][aPosR]);
+				ActorsInfo[actorid][aVW] = GetPlayerVirtualWorld(playerid);
+				ActorsInfo[actorid][aInt] = GetPlayerInterior(playerid);
+				SendClientMessage(playerid, COLOR_LIGHTRED, "[Actor] {FFFFFF}Ban da thay doi exterior cua Actor!");
+				if(IsValidActor(ActorsInfo[actorid][aId])) DestroyActor(ActorsInfo[actorid][aId]);
+				if(IsValidDynamic3DTextLabel(ActorsInfo[actorid][aTId])) DestroyDynamic3DTextLabel(ActorsInfo[actorid][aTId]);
+				CreateActors(actorid);
+				SaveActors();
+			    new szFileStr[200],
+                    File: fHandle = fopen("logs/actoredit.txt", io_write);
+				format(szFileStr, sizeof(szFileStr), "[Actor] Admin {FF0000}%s {FFFFFF}da chinh sua exterior cua actorid {FFFF00}%d.", GetPlayerNameEx(playerid), actorid);
+				fwrite(fHandle, szFileStr);
+			}
+			else
+			{
+				SendClientMessage( playerid, COLOR_LIGHTRED, "Actor chua duoc tao ra.");
+			}
+		}
+	}
+	else if(strcmp(choice, "skin", true) == 0)
+	{
+		ActorsInfo[actorid][aSkin] = amount;
+
+		format(string, sizeof(string), "[Actor] {FFFFFF}Ban da thay doi skin cua Actor thanh {FFFF00}%d.", amount);
+		SendClientMessage(playerid, COLOR_LIGHTRED, string);
+
+		if(IsValidActor(ActorsInfo[actorid][aId])) DestroyActor(ActorsInfo[actorid][aId]);
+		if(IsValidDynamic3DTextLabel(ActorsInfo[actorid][aTId])) DestroyDynamic3DTextLabel(ActorsInfo[actorid][aTId]);
+		CreateActors(actorid);
+
+		SaveActors();
+	    new szFileStr[200],
+            File: fHandle = fopen("logs/actoredit.txt", io_write);
+		format(szFileStr, sizeof(szFileStr), "[Actor] Admin {FF0000}%s {FFFFFF}da chinh sua skin cua actorid {FFFF00}%d{FFFFFF}.", GetPlayerNameEx(playerid), actorid);
+		fwrite(fHandle, szFileStr);
+		return 1;
+	} //Chuc nang nay chua su dung dc vi chua lam cai hanh dong cho actor
+	else if(strcmp(choice, "clearanim", true) == 0)
+	{
+		ActorsInfo[actorid][aAnim] = 0;
+		ClearActorAnimations(actorid);
+
+		format(string, sizeof(string), "[Actor] {FFFFFF}Ban da xoa bo hanh dong cua ActorID {FFFF00}%d.", actorid);
+		SendClientMessage(playerid, COLOR_LIGHTRED, string);
+
+		SaveActors();
+	    new szFileStr[200],
+            File: fHandle = fopen("logs/actoredit.txt", io_write);
+		format(szFileStr, sizeof(szFileStr), "[Actor] Admin {FF0000}%s {FFFFFF}da xoa bo hanh dong cua ActorID {FFFF00}%d.", GetPlayerNameEx(playerid), actorid);
+		fwrite(fHandle, szFileStr);
+		return 1;
+	}
+	else if(strcmp(choice, "refresh", true) == 0)
+	{
+		format(string, sizeof(string), "[Actor] {FFFFFF}Ban da lam moi actorid {FFFF00}%d.", actorid);
+		SendClientMessage(playerid, COLOR_LIGHTRED, string);
+
+		if(IsValidActor(ActorsInfo[actorid][aId])) DestroyActor(ActorsInfo[actorid][aId]);
+		if(IsValidDynamic3DTextLabel(ActorsInfo[actorid][aTId])) DestroyDynamic3DTextLabel(ActorsInfo[actorid][aTId]);
+		CreateActors(actorid);
+
+		SaveActors();
+	    new szFileStr[200],
+            File: fHandle = fopen("logs/actoredit.txt", io_write);
+		format(szFileStr, sizeof(szFileStr), "[Actor] Admin {FF0000}%s {FFFFFF}da lam moi actorid {FFFF00}%d.", GetPlayerNameEx(playerid), actorid);
+		fwrite(fHandle, szFileStr);
+		return 1;
+	}
+	else if(strcmp(choice, "delete", true) == 0)
+	{
+    	if(IsValidActor(ActorsInfo[actorid][aId])) DestroyActor(ActorsInfo[actorid][aId]);
+	    DestroyDynamic3DTextLabel(ActorsInfo[actorid][aTId]);
+		ActorsInfo[actorid][aName] = 0;
+		ActorsInfo[actorid][aVW] = 0;
+		ActorsInfo[actorid][aInt] = 0;
+		ActorsInfo[actorid][aPosX] = 0;
+		ActorsInfo[actorid][aPosY] = 0;
+		ActorsInfo[actorid][aPosZ] = 0;
+		ActorsInfo[actorid][aPosR] = 0;
+		ActorsInfo[actorid][aSkin] = 0;
+		SaveActors();
+		format(string, sizeof(string), "[Actor] {FFFFFF}Da xoa bo ActorID {FFFF00}%d.", actorid);
+		SendClientMessage(playerid, COLOR_LIGHTRED, string);
+	    new szFileStr[200],
+            File: fHandle = fopen("logs/actoredit.txt", io_write);
+		format(string, sizeof(string), "[Actor] Admin {FF0000}%s {FFFFFF}da xoa bo ActorID{FFFF00}%d", GetPlayerNameEx(playerid), actorid);
+		fwrite(fHandle, szFileStr);
+		return 1;
+	}
+	return 1;
+}
+
+
 // end of commands
 // These includes must be at the bottom always //
 #include "./inc/cwspeedo.inc"
