@@ -1625,7 +1625,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        {
 				PlayerInfo[playerid][pTutorial] = 1;
 				PlayerInfo[playerid][pLogged] = 1;
-                PlayerInfo[playerid][pTutorialTimer] = SetTimerEx("TutorialTimer", 1000, false, "ii", playerid, 11);
+                PlayerInfo[playerid][pTutorialTimer] = SetTimerEx("TutorialTimer", 1000, false, "ii", playerid, 10);
 	            //SendClientMessage(playerid, COLOR_YELLOW, "That's all the information we need right now. The tutorial will start in just a moment.");
 			}
 	    }
@@ -1717,7 +1717,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                {
 	                    case 0:
 	                    {
-                         	new price = 20;
+                         	new price = 100;
 
 	                        if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1747,7 +1747,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1:
 						{
-						    new price = 80;
+						    new price = 500;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1849,7 +1849,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 4:
 						{
-						    new price = 20;
+						    new price = 100;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1883,7 +1883,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 5:
 						{
-						    new price = 120;
+						    new price = 200;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1910,7 +1910,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 6:
 						{
-						    new price = 100;
+						    new price = 500;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1944,7 +1944,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 7:
 						{
-						    new price = 30;
+						    new price = 500;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -1978,7 +1978,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 8:
 						{
-						    new price = 10;
+						    new price = 100;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2012,7 +2012,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 9:
 						{
-						    new price = 50;
+						    new price = 500;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2046,7 +2046,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 10:
 						{
-						    new price = 50;
+						    new price = 200;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2075,12 +2075,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                        mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET bakingsoda = %i WHERE uid = %i", PlayerInfo[playerid][pBakingSoda], PlayerInfo[playerid][pID]);
 	                        mysql_tquery(connectionID, queryBuffer);
 
-	                        SendProximityMessage(playerid, 20.0, COLOR_PURPLE, "** %s da thanh toan $%i den nguoi ban hang va nhan duoc baking soda.", GetPlayerRPName(playerid), price);
+	                        SendProximityMessage(playerid, 20.0, COLOR_PURPLE, "** %s da thanh toan $%i cho nguoi ban hang va nhan duoc baking soda.", GetPlayerRPName(playerid), price);
 	                        SendClientMessage(playerid, COLOR_WHITE, "Da mua Soda.");
 						}
 						case 11:
 						{
-						    new price = 150;
+						    new price = 600;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2109,12 +2109,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                        mysql_format(connectionID, queryBuffer, sizeof(queryBuffer), "UPDATE users SET watch = 1 WHERE uid = %i", PlayerInfo[playerid][pID]);
 	                        mysql_tquery(connectionID, queryBuffer);
 
-	                        SendProximityMessage(playerid, 20.0, COLOR_PURPLE, "** %s da thanh toan $%i to the shopkeeper and received a pocket watch.", GetPlayerRPName(playerid), price);
+	                        SendProximityMessage(playerid, 20.0, COLOR_PURPLE, "** %s da thanh toan $%i cho nguoi ban hang va nhan duoc mot chiec dong ho.", GetPlayerRPName(playerid), price);
 	                        SendClientMessage(playerid, COLOR_WHITE, "Da mua dong ho bo tui. Su dung /watch de tat no.");
 						}
 						case 12:
 						{
-						    new price = 250;
+						    new price = 200;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -2216,7 +2216,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 15:
 						{
-						    new price = 2000;
+						    new price = 5000;
 
 						    if(PlayerInfo[playerid][pCash] < price)
 	                        {
@@ -9017,6 +9017,39 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendClientMessage(playerid, COLOR_AQUA, "** Ban da duoc den bu Premier! Dung /carstorage de thay no. **");
 					}
 				}
+			}
+		}
+		case DIALOG_CAR:
+		{
+			if(response)
+			{
+				switch(listitem)
+			    {
+			    	case 0:
+			    	{
+			    		callcmd::engine(playerid, "\1");
+			    	}
+			    	case 1:
+			    	{
+			    		callcmd::sb(playerid, "\1");
+			    	}
+			    	case 2:
+			    	{
+			    		callcmd::lights(playerid, "\1");
+			    	}
+			    	case 3:
+			    	{
+			    		callcmd::hood(playerid, "\1");
+			    	}
+			    	case 4:
+			    	{
+			    		callcmd::trunk(playerid, "\1");
+			    	}
+			    	case 5:
+			    	{
+			    		callcmd::carinfo(playerid, "\1");
+			    	}
+			    }
 			}
 		}
 		case DIALOG_NONE:
