@@ -62,6 +62,7 @@
 #include <dini>
 #include <a_actor>
 #include <strlib>
+#include <LauncherAddon>
 // --------------------------------------
 //#include <dyn_objects>
 // ---------------------------------------
@@ -4959,7 +4960,7 @@ LoadMap()
 {
 	#include "./inc/mappings/allmap.inc"
 	#include "./inc/mappings/farmer.inc"
-	#include "./inc/mappings/vip_house_6.inc"
+	#include "./inc/mappings/intsel.inc"
 }
 // - FOR PIZZAWTF
 
@@ -20495,6 +20496,19 @@ forward Float:GetDoorsZCoordForFloor(floorid);
 
 public OnPlayerConnect(playerid)
 {
+	new version[24];
+	GetPlayerVersion(playerid, version, sizeof(version));
+	if(!strcmp(version, "Arizona PC"))
+	{
+		SetLauncherStatus(playerid, true);
+		SendClientMessage(playerid, -1, "Ban da su dung Launcher.");
+	}
+	else
+	{
+		SetLauncherStatus(playerid, false);
+		SendClientMessage(playerid, -1, "Ban khong su dung Launcher.");
+	}
+
 	ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_HEALTH, false);
     ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_ARMOUR, false);
     ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_MONEY, false);
@@ -24983,7 +24997,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				SetPlayerAttachedObject(playerid, 0, 2901, 6, 0.0000, 0.0459, -0.3159, 0.0000, 91.7999, -25.6000, 1.0000, 1.0000, 1.0000, 0xFFFFFFFF, 0xFFFFFFFF);
 				SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Ban da lay mot bo thuc an cho Bo Shorthorn, hay mang den va cho bo an.");
-				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /drop [thucan].");
+				SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /vut [thucan].");
 			}
 		}
         if(!GateCheck(playerid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
@@ -26449,7 +26463,7 @@ stock GetWeaponModel(weaponid)
 	new string[2048];
 	format(string, sizeof(string), "{7514F6}General Commands: {FFFFFF}/thongtin, /buylevel, /b, /g, /me, /do, /(o)oc, /(s)hout, /(l)ow, /(w)hisper, /(n)ewbie.\n{089DCE}General Commands: {FFFFFF}/pay, /id, /time, /report, /upgrade, /quyengop, /stopmusic, /thamgiasukien, /thoatsukien.\n{7514F6}General Commands: {FFFFFF}/dice, /flipcoin, /accent, /helpers, /giuptoi, /chapnhan, /activity, /skill, /quitjob.\n{089DCE}General Commands: {FFFFFF}/give, /sell, /toggle, /cancelcp, /afk, /(ad)vertise, /buy, /refuel, /call, /sms.");
 	strcat(string, "\n{FFFF00}General Commands: {FFFFFF}/clothing, /locate, /frisk, /contract, /number, /boombox, /switchspeedo, /stuck.");
-	strcat(string, "\n{7514F6}General Commands: {FFFFFF}/shakehand, /dropgun, /grabgun, /useCookies, /usecigar, /usedrug, /showid.\n{089DCE}General Commands: {FFFFFF}/(inv)entory, /guninv, /changename, /drop, /eject, /dicebet, /gangs, /factions.\n{7514F6}General Commands: {FFFFFF}/calculate, /serverstats, /resetupgrades, /turfs, /lands, /watch, /gps, /fixvw.\n{089DCE}General Commands: {FFFFFF}/myupgrades, /unmute, /breakin, /achievements, /buyinsurance, /tie, /untie.");
+	strcat(string, "\n{7514F6}General Commands: {FFFFFF}/shakehand, /vutgun, /grabgun, /useCookies, /usecigar, /usedrug, /showid.\n{089DCE}General Commands: {FFFFFF}/(inv)entory, /guninv, /changename, /vut, /eject, /dicebet, /gangs, /factions.\n{7514F6}General Commands: {FFFFFF}/calculate, /serverstats, /resetupgrades, /turfs, /lands, /watch, /gps, /fixvw.\n{089DCE}General Commands: {FFFFFF}/myupgrades, /unmute, /breakin, /achievements, /buyinsurance, /tie, /untie.");
 	strcat(string, "\n{FFFF00}General Commands: {FFFFFF}/firstaid, /scanner, /bodykit, /rimkit, /buylock.");
 	strcat(string, "\n{089DCE}General Commands: {FFFFFF}/househelp, /garagehelp, /bizhelp, /jobhelp, /animhelp, /vehiclehelp, /viphelp.\n{7514F6}General Commands: {FFFFFF}/bankhelp, /factionhelp, /ganghelp, /landhelp, /helperhelp.");
 	if(PlayerInfo[playerid][pHelperManager])
@@ -26508,7 +26522,7 @@ CMD:fmembers(playerid, params[])
 {
 	if(PlayerInfo[playerid][pFaction] == -1)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "You can't use this command as you're not apart of any faction.");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay vi ban khong duoc bat ky to chuc nao.");
 	}
 
     SendClientMessage(playerid, COLOR_NAVYBLUE, "_____ Members Online _____");
@@ -26814,7 +26828,7 @@ stock GiftBox(playerid, giveplayerid)
 	}
     if(sscanf(param, "s[64]s[64]", oldcmd, "Xac nhan"))
     {
-        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /deletecmd [name] [confirm]");
+        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /deletecmd [name] [xacnhan]");
 	}
 	if(PC_CommandExists(oldcmd))
 	{
@@ -28375,9 +28389,9 @@ CMD:revokeregistration(playerid, params[])
 
 CMD:resetupgrades(playerid, params[])
 {
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /resetupgrades [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /resetupgrades [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Lenh nay se reset toan bo nang cap cua ban va hoan tra %i diem nang cap.", (PlayerInfo[playerid][pLevel] - 1) * 2);
 	    return 1;
 	}
@@ -28673,7 +28687,7 @@ CMD:buyrack(playerid, params[])
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "You are not in range of your house interior.");
 
 	if (isnull(params) || (!isnull(params) && strcmp(params, "Xac nhan", true) != 0))
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "/buyrack [confirm] ($1,000 fee)");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "/buyrack [xacnhan] ($1,000 fee)");
 
 	if (Rack_Count(playerid) >= 4)
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Your house can only have up to 4 weapon racks.");
@@ -28799,8 +28813,8 @@ CMD:help(playerid, params[])
     SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/dice, /flipcoin, /accent, /helpers, /giuptoi, /chapnhan, /activity, /skill, /quitjob.");
     SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/give, /sell, /toggle, /cancelcp, /afk, /(ad)vertise, /buy, /refuel, /call, /sms.");
     SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/clothing, /locate, /frisk, /contract, /number, /boombox, /switchspeedo, /stuck.");
-    SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/shakehand, /dropgun, /grabgun, /usecookies, /usecigar, /usedrug, /showid.");
-	SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/(inv)entory, /guninv, /changename, /drop, /eject, /dicebet, /gangs, /factions.");
+    SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/shakehand, /vutgun, /grabgun, /usecookies, /usecigar, /usedrug, /showid.");
+	SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/(inv)entory, /guninv, /changename, /vut, /eject, /dicebet, /gangs, /factions.");
 	SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/calculate, /serverstats, /resetupgrades, /turfs, /lands, /watch, /gps, /fixvw.");
     SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/myupgrades, /unmute, /breakin, /achievements, /buyinsurance, /tie, /untie.");
 	SendClientMessage(playerid, COLOR_NAVYBLUE, "[New City] {C8C8C8}/househelp, /garagehelp, /bizhelp, /jobhelp, /animhelp, /vehiclehelp, /viphelp.");
@@ -28870,8 +28884,8 @@ CMD:jobhelp(playerid, params[])
 
 CMD:vehiclehelp(playerid, params[])
 {
-    SendClientMessage(playerid, COLOR_NAVYBLUE, "________________ Vehicle Help ________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** VEHICLE HELP *** type a command for more information.");
+    SendClientMessage(playerid, COLOR_NAVYBLUE, "________________ Tro giup Phuong tien ________________");
+    SendClientMessage(playerid, COLOR_WHITE, "*** VEHICLE HELP *** go lenh de biet them thong tin.");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** VEHICLE *** /lights /hood /boot /buyvehicle /carstorage /park /lock /findcar");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** VEHICLE *** /vsafe /neon /unmod /colorcar /paintcar /upgradevehicle /sellcar /sellmycar");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** VEHICLE *** /givekeys /takekeys /setradio /paytickets /carinfo /gascan /breakin");
@@ -28881,9 +28895,9 @@ CMD:vehiclehelp(playerid, params[])
 
 CMD:bankhelp(playerid, params[])
 {
-	SendClientMessage(playerid, COLOR_NAVYBLUE, "__________________ Banking Help __________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** BANKING HELP *** type a command for more information.");
-    SendClientMessage(playerid, COLOR_LIGHTRED, "*** BANKING *** /withdraw /deposit /wiretransfer /balance /robbank /robinvite /bombvault /robbers");
+	SendClientMessage(playerid, COLOR_NAVYBLUE, "__________________ Tro giup Ngan hang __________________");
+    SendClientMessage(playerid, COLOR_WHITE, "*** BANKING HELP *** go lenh de biet them thong tin.");
+    SendClientMessage(playerid, COLOR_LIGHTRED, "*** BANKING *** /ruttien /guitien /wiretransfer /balance /robbank /robinvite /bombvault /robbers");
 	return 1;
 }
 
@@ -28894,8 +28908,8 @@ CMD:viphelp(playerid, params[])
 		return SendClientMessage(playerid, COLOR_LIGHTRED, "You can't use this command as you don't have a VIP subscription.");
 	}
 
-    SendClientMessage(playerid, COLOR_NAVYBLUE, "__________________ VIP Help __________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** VIP HELP *** type a command for more information.");
+    SendClientMessage(playerid, COLOR_NAVYBLUE, "__________________ Tro giup VIP __________________");
+    SendClientMessage(playerid, COLOR_WHITE, "*** VIP HELP *** go lenh de biet them thong tin.");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** VIP *** /(v)ip, /vipinfo, /viptag, /vipcolor, /vipinvite, /vipnumber, /vipmusic.");
 
 	if(PlayerInfo[playerid][pVIPPackage] == 3)
@@ -28911,7 +28925,7 @@ CMD:fmembers(playerid, params[])
 {
 	if(PlayerInfo[playerid][pFaction] == -1)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "You can't use this command as you're not apart of any faction.");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay vi ban khong duoc bat ky to chuc nao.");
 	}
 
     SendClientMessage(playerid, COLOR_NAVYBLUE, "_____________ Nhan vien truc tuyen _____________");
@@ -28993,11 +29007,11 @@ CMD:factionhelp(playerid, params[])
 {
 	if(PlayerInfo[playerid][pFaction] == -1)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "You can't use this command as you're not apart of any faction.");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the su dung lenh nay vi ban khong duoc bat ky to chuc nao.");
 	}
 
     SendClientMessage(playerid, COLOR_GREEN, "_______________________________________");
-	SendClientMessage(playerid, COLOR_WHITE, "*** FACTION HELP *** type a command for more information.");
+	SendClientMessage(playerid, COLOR_WHITE, "*** FACTION HELP *** go lenh de biet them thong tin.");
 	SendClientMessage(playerid, COLOR_LIGHTRED, "*** FACTION *** /fc /d /(r)adio /div /faction /division /locker /showbadge /(m)egaphone");
 
 	switch(FactionInfo[PlayerInfo[playerid][pFaction]][fType])
@@ -29045,7 +29059,7 @@ CMD:ganghelp(playerid, params[])
 	}
 
     SendClientMessage(playerid, COLOR_GREEN, "_______________________________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** GANG HELP *** type a command for more information.");
+    SendClientMessage(playerid, COLOR_WHITE, "*** GANG HELP *** go lenh de biet them thong tin.");
 	SendClientMessage(playerid, COLOR_LIGHTRED, "*** GANG *** /f /gang /(f)amily(safe) /gHuyup /bandana /capture /claim /reclaim /turfinfo /points");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** GANG *** /gbuyvehicle /gpark /gfindcar /grespawncars /gsellcar /gunmod /lock, /endalliance, /gspray");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** CREW *** /managecrew /crew");
@@ -29055,8 +29069,8 @@ CMD:ganghelp(playerid, params[])
 CMD:landhelp(playerid, params[])
 {
     SendClientMessage(playerid, COLOR_GREEN, "_______________________________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** LAND HELP *** type a command for more information.");
-	SendClientMessage(playerid, COLOR_LIGHTRED, "*** LAND *** /buyland /lock /door /landinfo /land /sellmyland /sellland /droplandkeys");
+    SendClientMessage(playerid, COLOR_WHITE, "*** LAND HELP *** go lenh de biet them thong tin.");
+	SendClientMessage(playerid, COLOR_LIGHTRED, "*** LAND *** /buyland /lock /door /landinfo /land /sellmyland /sellland /vutlandkeys");
     SendClientMessage(playerid, COLOR_LIGHTRED, "*** LAND *** '/toggle lands' to show or hide lands on your mini-map.");
     return 1;
 }
@@ -29064,7 +29078,7 @@ CMD:landhelp(playerid, params[])
 CMD:planthelp(playerid, params[])
 {
     SendClientMessage(playerid, COLOR_GREEN, "_______________________________________");
-    SendClientMessage(playerid, COLOR_WHITE, "*** PLANT HELP *** type a command for more information.");
+    SendClientMessage(playerid, COLOR_WHITE, "*** PLANT HELP *** go lenh de biet them thong tin.");
 	SendClientMessage(playerid, COLOR_LIGHTRED, "*** PLANT *** /plantweed /plantinfo /pickplant /seizeplant");
     return 1;
 }
@@ -36736,7 +36750,7 @@ CMD:event(playerid, params[])
 	{
 		if(isnull(param) || strcmp(param, "Xac nhan", true) != 0)
 		{
-		    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /event [ready] [confirm]");
+		    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /event [ready] [xacnhan]");
 		    SendClientMessage(playerid, COLOR_SYNTAX, "This command will announce to the whole server that an event is ready to join.");
 			return 1;
 	    }
@@ -37259,7 +37273,7 @@ CMD:fwsall(playerid, params[])
 	{
 		if(sscanf(params, "s", "Xac nhan"))
 		{
-			SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /fwsall [confirm]");
+			SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /fwsall [xacnhan]");
 			return 1;
 		}
 		foreach(new targetid : Player)
@@ -41946,9 +41960,9 @@ CMD:renthouse(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co nha trong pham vi. Ban can phai o gan mot ngoi nha.");
 	}
-	/*if(strcmp(params, "confirm", true) != 0)
+	/*if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /renthouse [confirm]");
+	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /renthouse [xacnhan]");
 	}*/
 	if(!HouseInfo[houseid][hOwnerID])
 	{
@@ -42163,9 +42177,9 @@ CMD:furniture(playerid, params[])
 	}
 	else if(!strcmp(option, "clear", true))
 	{
-	    if(isnull(param) || strcmp(param, "confirm", true) != 0)
+	    if(isnull(param) || strcmp(param, "xacnhan", true) != 0)
 	    {
-	        SendClientMessage(playerid, COLOR_WHITE, "Su dung: /furniture [clear] [confirm]");
+	        SendClientMessage(playerid, COLOR_WHITE, "Su dung: /furniture [clear] [xacnhan]");
 			SendClientMessage(playerid, COLOR_SYNTAX, "Dieu nay ban tat ca do dac trong nha cua ban. Hanh dong nay la khong the dao nguoc.");
 			return 1;
 		}
@@ -42551,9 +42565,9 @@ CMD:buygarage(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co garage trong pham vi. Ban phai o gan garage.");
 	}
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /buygarage [confirm]");
+	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /buygarage [xacnhan]");
 	}
 	if(GarageInfo[garageid][gOwnerID])
 	{
@@ -42588,9 +42602,9 @@ CMD:upgradegarage(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Garage cua ban da o kich thuoc toi da co the. Ban khong the nang cap no them.");
 	}
-	if(isnull(params) || strcmp(params, "confirm", true) != 0)
+	if(isnull(params) || strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /upgradegarage [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /upgradegarage [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Kich thuoc Garage hien tai la %s va nang cap len voi gia %s.", garageInteriors[GarageInfo[garageid][gType] + 1][intName], FormatNumber(garageInteriors[GarageInfo[garageid][gType] + 1][intPrice]));
 		return 1;
 	}
@@ -42654,9 +42668,9 @@ CMD:sellmygarage(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o trong pham vi cua bat ky nha de xe nao cua ban.");
 	}
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmygarage [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmygarage [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Lenh nay ban nha de xe cua ban tro lai trang thai. Ban se nhan lai %s.", FormatNumber(percent(GarageInfo[garageid][gPrice], 75)));
 	    return 1;
 	}
@@ -43040,9 +43054,9 @@ CMD:buybiz(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co doanh nghiep nao trong pham vi. Ban can phai o gan mot doanh nghiep.");
 	}
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /buybiz [confirm]");
+	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /buybiz [xacnhan]");
 	}
 	if(BusinessInfo[businessid][bOwnerID])
 	{
@@ -43237,9 +43251,9 @@ CMD:sellmybiz(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o trong pham vi bat ky doanh nghiep nao cua ban.");
 	}
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmybiz [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmybiz [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Lenh nay se ban doanh nghiep cua ban tro lai trang thai. Ban se nhan lai duoc %s.", FormatNumber(percent(BusinessInfo[businessid][bPrice], 75)));
 	    return 1;
 	}
@@ -43318,7 +43332,7 @@ CMD:buy(playerid, params[])
 	{
 	    case BUSINESS_STORE:
 	    {
-	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($20)\nBo dam ($80)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($20)\nMay anh ($120)\nMay nghe nhac MP3 ($100)\nCan cau ($30)\nMoi cau ca ($10)\nAxit muriatic ($50)\nBaking soda ($50)\nDong ho ($150)\nHe thong GPS ($250)\nCan xang ($100)\nDay thung ($20)\nMat na ($2,000)", "Chon", "Huy bo");
+	        ShowPlayerDialog(playerid, DIALOG_BUY, DIALOG_STYLE_LIST, title, "Dien thoai di dong ($100)\nBo dam ($500)\nXi ga ($10)\nBinh phun son ($50)\nDanh ba dien thoai ($100)\nMay anh ($200)\nMay nghe nhac MP3 ($500)\nCan cau ($500)\nMoi cau ca ($100)\nAxit muriatic ($500)\nBaking soda ($200)\nDong ho ($600)\nHe thong GPS ($200)\nCan xang ($100)\nDay thung ($20)\nMat na ($5,000)", "Chon", "Huy bo");
 		}
 		/*
 		case BUSINESS_GUNSHOP:
@@ -44201,7 +44215,7 @@ CMD:giaohang(playerid, params[])
 	}
 	if(PlayerInfo[playerid][pHoldingPizza] == 1 || PlayerInfo[playerid][pHoldingBox] == 1)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "Su dung: /drop [pizza/crate]");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Su dung: /vut [pizza/crate]");
 	}
 	if(PlayerInfo[playerid][pCourierBiz] > -1)
 	{
@@ -44230,7 +44244,7 @@ CMD:giaobanh(playerid, params[])
 	}
 	if(PlayerInfo[playerid][pHoldingPizza] == 1 || PlayerInfo[playerid][pHoldingBox] == 1)
 	{
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "Su dung: /drop [pizza/crate]");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Su dung: /vut [pizza/crate]");
 	}
 	/*if(PlayerInfo[playerid][pPizzaHouse] == -1)
 	{
@@ -44461,7 +44475,7 @@ CMD:stoptow(playerid, params[])
     return 1;
 }
 
-CMD:fill(playerid, params[])
+CMD:doxang(playerid, params[])
 {
 	return callcmd::refuel(playerid, params);
 }
@@ -44513,7 +44527,7 @@ CMD:refuel(playerid, params[])
 	return 1;
 }
 
-CMD:withdraw(playerid, params[])
+CMD:ruttien(playerid, params[])
 {
 	new amount;
 
@@ -44523,7 +44537,7 @@ CMD:withdraw(playerid, params[])
 	}
 	if(sscanf(params, "i", amount))
 	{
-	    return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /withdraw [so luong] ($%i co san)", PlayerInfo[playerid][pBank]);
+	    return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /ruttien [so luong] ($%i co san)", PlayerInfo[playerid][pBank]);
 	}
 	if(amount < 1 || amount > PlayerInfo[playerid][pBank])
 	{
@@ -44540,7 +44554,7 @@ CMD:withdraw(playerid, params[])
 	return 1;
 }
 
-CMD:deposit(playerid, params[])
+CMD:guitien(playerid, params[])
 {
 	new amount;
 
@@ -44550,7 +44564,7 @@ CMD:deposit(playerid, params[])
 	}
 	if(sscanf(params, "i", amount))
 	{
-	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /deposit [so luong]");
+	    return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /guitien [so luong]");
 	}
 	if(amount < 1 || amount > PlayerInfo[playerid][pCash])
 	{
@@ -46335,9 +46349,9 @@ CMD:gmx(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co quyen su dung lenh nay.");
 	}
-	if(isnull(params) && strcmp(params, "confirm", true) != 0)
+	if(isnull(params) && strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /gmx [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /gmx [xacnhan]");
 	    SendClientMessage(playerid, COLOR_SYNTAX, "Lenh nay luu tat ca tai khoan nguoi choi va shutdown may chu.");
 	    return 1;
 	}
@@ -49023,9 +49037,9 @@ CMD:faction(playerid, params[])
 	}
 	else if(!strcmp(option, "quit", true))
 	{
-	    if(isnull(param) || strcmp(param, "confirm", true) != 0)
+	    if(isnull(param) || strcmp(param, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /faction [quit] [confirm]");
+	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /faction [quit] [xacnhan]");
 	    }
 
 	    SendClientMessageEx(playerid, COLOR_AQUA, "Ban da roi khoi %s voi cap bac la {00AA00}%s{33CCFF} (%i).", FactionInfo[PlayerInfo[playerid][pFaction]][fName], FactionRanks[PlayerInfo[playerid][pFaction]][PlayerInfo[playerid][pFactionRank]], PlayerInfo[playerid][pFactionRank]);
@@ -52556,7 +52570,7 @@ CMD:createland(playerid, params[])
 
 	PlayerInfo[playerid][pLandCost] = price;
 	PlayerInfo[playerid][pZoneType] = ZONETYPE_LAND;
-	ShowPlayerDialog(playerid, DIALOG_CREATEZONE, DIALOG_STYLE_MSGBOX, "Land creation system", "You have entered land creation mode. In order to create a land you need\nto mark four points around the area you want your land to be in, forming\na square. You must make a square or your outcome won't be as expected.\n\nPress {00AA00}Confirm{A9C4E4} to begin land creation.", "Confirm", "Huy bo");
+	ShowPlayerDialog(playerid, DIALOG_CREATEZONE, DIALOG_STYLE_MSGBOX, "Land creation system", "You have entered land creation mode. In order to create a land you need\nto mark four points around the area you want your land to be in, forming\na square. You must make a square or your outcome won't be as expected.\n\nPress {00AA00}Confirm{A9C4E4} to begin land creation.", "Xac nhan", "Huy bo");
 	return 1;
 }
 
@@ -52726,9 +52740,9 @@ CMD:buyland(playerid, params[])
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Land nay da co nguoi so huu");
 	}
-    if(strcmp(params, "confirm", true))
+    if(strcmp(params, "xacnhan", true))
     {
-        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /buyland [confirm] (This land costs %s.)", FormatNumber(LandInfo[landid][lPrice]));
+        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /buyland [xacnhan] (This land costs %s.)", FormatNumber(LandInfo[landid][lPrice]));
 	}
 	if(PlayerInfo[playerid][pCash] < LandInfo[landid][lPrice])
 	{
@@ -52785,9 +52799,9 @@ CMD:sellmyland(playerid, params[])
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o gan manh dat cua ban.");
     }
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmyland [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /sellmyland [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Ban da ban manh dat cua ban cho chinh phu. Ban se nhan %s tien den bu.", FormatNumber(percent(LandInfo[landid][lPrice], 75)));
 	    return 1;
 	}
@@ -53346,15 +53360,18 @@ CMD:tuido(playerid, params[])
 	DisplayInventory(playerid);
 	return 1;
 }
-
+CMD:vut(playerid, params[])
+{
+	return callcmd::drop(playerid, params);
+}
 CMD:drop(playerid, params[])
 {
 	new option[12], confirm[10];
 
 	if(sscanf(params, "s[12]S()[10]", option, confirm))
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /drop [tuy chon]");
-	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Weed, Cocaine, Meth, Painkillers, Cigars, Spraycans");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /vut [tuy chon]");
+	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Weed, Cocaine, Meth, Painkillers, Cigars, Spraycans, Thucan");
 	    SendClientMessage(playerid, COLOR_SYNTAX, "Danh sach cac tuy chon: Seeds, Ephedrine, CarLicense, Weapons, AllWeapons, Crate, Pizza");
 	    return 1;
 	}
@@ -53365,9 +53382,9 @@ CMD:drop(playerid, params[])
 
 	if(!strcmp(option, "allweapons", true))
 	{
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /drop [allweapons] [confirm]");
+	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /vut [allweapons] [xacnhan]");
 	    }
 
 	    ResetPlayerWeaponsEx(playerid);
@@ -53389,6 +53406,18 @@ CMD:drop(playerid, params[])
 		SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da vut chiec pizza ay.");
 		return 1;
 	}
+	else if(!strcmp(option, "thucan", true))
+	{
+		if(Cgetfood[playerid] != 1)
+		{
+			return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban dang khong cam 1 bo thuc an nao.");
+		}
+		Cgetfood[playerid] = 0;
+		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
+		RemovePlayerAttachedObject(playerid, 0);
+		SendClientMessage(playerid, COLOR_LIGHTRED, "Ban da vut mot bo thuc an.");
+		return 1;
+	}
 	else if(!strcmp(option, "crate", true))
 	{
 		if(PlayerInfo[playerid][pHoldingBox] != 1)
@@ -53407,9 +53436,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co vat lieu de nem.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [materials] [confirm] (You have %i materials.)", PlayerInfo[playerid][pMaterials]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [materials] [xacnhan] (You have %i materials.)", PlayerInfo[playerid][pMaterials]);
 	    }
 
 	    PlayerInfo[playerid][pMaterials] = 0;
@@ -53424,9 +53453,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co weed de nem.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [weed] [confirm] (You have %i grams of weed.)", PlayerInfo[playerid][pWeed]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [weed] [xacnhan] (You have %i grams of weed.)", PlayerInfo[playerid][pWeed]);
 	    }
 
 	    PlayerInfo[playerid][pWeed] = 0;
@@ -53441,9 +53470,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co cocaine de nem.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [cocaine] [confirm] (You have %i grams of cocaine.)", PlayerInfo[playerid][pCocaine]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [cocaine] [xacnhan] (You have %i grams of cocaine.)", PlayerInfo[playerid][pCocaine]);
 	    }
 
 	    PlayerInfo[playerid][pCocaine] = 0;
@@ -53458,9 +53487,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co meth de nem.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [meth] [confirm] (You have %i grams of meth.)", PlayerInfo[playerid][pMeth]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [meth] [xacnhan] (You have %i grams of meth.)", PlayerInfo[playerid][pMeth]);
 	    }
 
 	    PlayerInfo[playerid][pMeth] = 0;
@@ -53475,9 +53504,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co painkillers de nem.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [cocaine] [confirm] (You have %i painkillers.)", PlayerInfo[playerid][pPainkillers]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [cocaine] [xacnhan] (You have %i painkillers.)", PlayerInfo[playerid][pPainkillers]);
 	    }
 
 	    PlayerInfo[playerid][pPainkillers] = 0;
@@ -53492,9 +53521,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co cigars de vut");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [cigars] [confirm] (You have %i cigars.)", PlayerInfo[playerid][pCigars]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [cigars] [xacnhan] (You have %i cigars.)", PlayerInfo[playerid][pCigars]);
 	    }
 
 	    PlayerInfo[playerid][pCigars] = 0;
@@ -53509,9 +53538,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co spraycans de vut.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [spraycans] [confirm] (You have %i spraycans.)", PlayerInfo[playerid][pSpraycans]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [spraycans] [xacnhan] (You have %i spraycans.)", PlayerInfo[playerid][pSpraycans]);
 	    }
 
 	    PlayerInfo[playerid][pSpraycans] = 0;
@@ -53526,9 +53555,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co seed de vut.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [seeds] [confirm] (You have %i seeds.)", PlayerInfo[playerid][pSeeds]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [seeds] [xacnhan] (You have %i seeds.)", PlayerInfo[playerid][pSeeds]);
 	    }
 
 	    PlayerInfo[playerid][pSeeds] = 0;
@@ -53543,9 +53572,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co ephedrine de vut.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /drop [ephedrine] [confirm] (You have %i grams of ephedrine.)", PlayerInfo[playerid][pEphedrine]);
+	        return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /vut [ephedrine] [xacnhan] (You have %i grams of ephedrine.)", PlayerInfo[playerid][pEphedrine]);
 	    }
 
 	    PlayerInfo[playerid][pEphedrine] = 0;
@@ -53560,9 +53589,9 @@ CMD:drop(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong co bang lai xe de vut.");
 		}
-	    if(isnull(confirm) || strcmp(confirm, "confirm", true) != 0)
+	    if(isnull(confirm) || strcmp(confirm, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /drop [carlicense] [confirm] (This drops your drivers license.)");
+	        return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /vut [carlicense] [xacnhan] (This drops your drivers license.)");
 	    }
 
 	    PlayerInfo[playerid][pCarLicense] = 0;
@@ -54456,9 +54485,9 @@ CMD:gang(playerid, params[])
 		{
 		    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban can it nhat xep hang 6+ de su dung lenh nay.");
 		}
-		if(isnull(param) || strcmp(param, "confirm", true) != 0)
+		if(isnull(param) || strcmp(param, "xacnhan", true) != 0)
 		{
-		    return SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [safe] [confirm] (Di chuyen locker gang)");
+		    return SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [safe] [xacnhan] (Di chuyen locker gang)");
 		}
 
 		GetPlayerPos(playerid, GangInfo[PlayerInfo[playerid][pGang]][gStashX], GangInfo[PlayerInfo[playerid][pGang]][gStashY], GangInfo[PlayerInfo[playerid][pGang]][gStashZ]);
@@ -54514,9 +54543,9 @@ CMD:gang(playerid, params[])
 	}
 	else if(!strcmp(option, "quit", true))
 	{
-	    if(isnull(param) || strcmp(param, "confirm", true) != 0)
+	    if(isnull(param) || strcmp(param, "xacnhan", true) != 0)
 	    {
-	        return SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [quit] [confirm]");
+	        return SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [quit] [xacnhan]");
 	    }
 
 
@@ -54614,7 +54643,7 @@ CMD:gang(playerid, params[])
 		}
 		if(sscanf(param, "is[10]", type, confirm))
 		{
-		    SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [npc] [slot] [confirm]");
+		    SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gang [npc] [slot] [xacnhan]");
 		    SendClientMessage(playerid, COLOR_SYNTAX, "List of slots: (1) Arms Dealer");
 		    return 1;
 		}
@@ -54627,7 +54656,7 @@ CMD:gang(playerid, params[])
 		    return SendClientMessage(playerid, COLOR_LIGHTRED, "su dung lenh nay khi dang o trong xe.");
 		}
 
-		if(!isnull(confirm) && !strcmp(confirm, "confirm", true))
+		if(!isnull(confirm) && !strcmp(confirm, "xacnhan", true))
 		{
 			if(type == 1)
 			{
@@ -54968,9 +54997,9 @@ CMD:gsellcar(playerid, params[])
 	{
 	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o trong pham vi cua dai ly o to Grotti.");
 	}
-	if(strcmp(params, "confirm", true) != 0)
+	if(strcmp(params, "xacnhan", true) != 0)
 	{
-	    SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gsellcar [confirm]");
+	    SendClientMessage(playerid, COLOR_SYNTAX, "Su dung: /gsellcar [xacnhan]");
 	    SendClientMessageEx(playerid, COLOR_SYNTAX, "Lenh nay se xoa vinh vien phuong tien bang dang cua ban. Ban se nhan lai %s.", FormatNumber(percent(VehicleInfo[vehicleid][vPrice], 75)));
 	    return 1;
 	}
@@ -55592,7 +55621,7 @@ CMD:createturf(playerid, params[])
 	PlayerInfo[playerid][pZoneType] = ZONETYPE_TURF;
 
 	strcpy(PlayerInfo[playerid][pTurfName], name, 32);
-	ShowPlayerDialog(playerid, DIALOG_CREATEZONE, DIALOG_STYLE_MSGBOX, "Turf creation system", "You have entered turf creation mode. In order to create a turf you need\nto mark four points around the area you want your turf to be in, forming\na square. You must make a square or your outcome won't be as expected.\n\nPress {00AA00}Confirm{A9C4E4} to begin turf creation.", "Confirm", "Huy bo");
+	ShowPlayerDialog(playerid, DIALOG_CREATEZONE, DIALOG_STYLE_MSGBOX, "Turf creation system", "You have entered turf creation mode. In order to create a turf you need\nto mark four points around the area you want your turf to be in, forming\na square. You must make a square or your outcome won't be as expected.\n\nPress {00AA00}Confirm{A9C4E4} to begin turf creation.", "Xac nhan", "Huy bo");
 	return 1;
 }
 
@@ -56902,9 +56931,9 @@ CMD:movelocation(playerid, params[])
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co quyen su dung lenh nay.");
     }
-    if(sscanf(params, "is[32]", atm, "confirm"))
+    if(sscanf(params, "is[32]", atm, "xacnhan"))
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /movelocation [locationid] [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /movelocation [locationid] [xacnhan]");
 		SendClientMessage(playerid, COLOR_WHITE, "** NOTE: ATM se duoc chuyen den toa do ban dang dung tren.");
 		return 1;
 	}
@@ -56931,9 +56960,9 @@ CMD:createatm(playerid, params[])
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co quyen su dung lenh nay.");
     }
-    if(sscanf(params, "s[32]", "confirm"))
+    if(sscanf(params, "s[32]", "xacnhan"))
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /createatm [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /createatm [xacnhan]");
 		SendClientMessage(playerid, COLOR_WHITE, "** NOTE: The ATM will be created at the coordinates you are standing on.");
 		return 1;
 	}
@@ -56964,9 +56993,9 @@ CMD:moveatm(playerid, params[])
     {
         return SendClientMessage(playerid, COLOR_LIGHTRED, "Khong co quyen su dung lenh nay.");
     }
-    if(sscanf(params, "is[32]", atm, "confirm"))
+    if(sscanf(params, "is[32]", atm, "xacnhan"))
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /createatm [atmid] [confirm]");
+	    SendClientMessage(playerid, COLOR_WHITE, "Su dung: /createatm [atmid] [xacnhan]");
 		SendClientMessage(playerid, COLOR_WHITE, "** NOTE: ATM se duoc di chuyen den toa do ban dang dung tren.");
 		return 1;
 	}
@@ -57125,9 +57154,9 @@ CMD:editland(playerid, params[])
 	}
 	else if(!strcmp(option, "height", true))
 	{
-	    if(sscanf(param, "s", "confirm"))
+	    if(sscanf(param, "s", "xacnhan"))
 	    {
-			return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /editland [%i] [%s] [confirm]", landid, option);
+			return SendClientMessageEx(playerid, COLOR_WHITE, "Su dung: /editland [%i] [%s] [xacnhan]", landid, option);
 		}
         new Float:zCoord[2];
 		GetPlayerPos(playerid, zCoord[0], zCoord[0], zCoord[1]);
@@ -58141,9 +58170,9 @@ CMD:endalliance(playerid, params[])
 	new allyid = GangInfo[gangid][gAlliance];
 	new color, color2;
 
-	if(isnull(params) || strcmp(params, "confirm", true) != 0)
+	if(isnull(params) || strcmp(params, "xacnhan", true) != 0)
 	{
-	   return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /endalliance [confirm]");
+	   return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /endalliance [xacnhan]");
 	}
 	if(PlayerInfo[playerid][pGang] == -1)
 	{
@@ -58197,9 +58226,9 @@ CMD:endwar(playerid, params[])
 	new allyid = GangInfo[gangid][gWar];
 	new color, color2;
 
-	if(isnull(params) || strcmp(params, "confirm", true) != 0)
+	if(isnull(params) || strcmp(params, "xacnhan", true) != 0)
 	{
-	   return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /endwar [confirm]");
+	   return SendClientMessage(playerid, COLOR_WHITE, "Su dung: /endwar [xacnhan]");
 	}
 	if(PlayerInfo[playerid][pGang] == -1)
 	{
@@ -58376,9 +58405,9 @@ CMD:shutdownserver(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] >= 8)
 	{
 
-		if(strcmp(params, "confirm", true))
+		if(strcmp(params, "xacnhan", true))
 		{
-			SendClientMessage(playerid, COLOR_GREY3, "[Su dung]: /shutdown [confirm]");
+			SendClientMessage(playerid, COLOR_GREY3, "[Su dung]: /shutdown [xacnhan]");
  			SendClientMessage(playerid, COLOR_GREY3, "Lenh nay de luu tru nguoi choi va cac thu khac.");
   			return 1;
 		}
@@ -59107,7 +59136,7 @@ CMD:farmer(playerid, params[])
 					SetPlayerAttachedObject(playerid, 0, 2901, 6, 0.0000, 0.0459, -0.3159, 0.0000, 91.7999, -25.6000, 1.0000, 1.0000, 1.0000, 0xFFFFFFFF, 0xFFFFFFFF);
 					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 					SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Ban da lay mot bo thuc an cho Bo Shorthorn, hay mang den va cho bo an.");
-					SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /drop [thucan].");
+					SendClientMessage(playerid, COLOR_LIGHTRED, "[Cong viec]{FFFFFF} Neu muon vut bo thuc an di, hay su dung /vut [thucan].");
 				}
 			}
 			else SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong o noi lay thuc an cho Bo Shorthorn.");
