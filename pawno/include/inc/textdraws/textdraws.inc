@@ -409,3 +409,145 @@
 	PlayerTextDrawFont(playerid, Loading_Text[playerid][2], 3);
 	PlayerTextDrawSetProportional(playerid, Loading_Text[playerid][2], 1);
 	PlayerTextDrawSetShadow(playerid, Loading_Text[playerid][2], 0);
+
+
+	//Admin
+
+	SpecPlayer[playerid][0] = CreatePlayerTextDraw(playerid, 511.666687, 244.340805, "box");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][0], 0.000000, 22.866662);
+	PlayerTextDrawTextSize(playerid, SpecPlayer[playerid][0], 648.000000, 0.000000);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][0], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][0], -1);
+	PlayerTextDrawUseBox(playerid, SpecPlayer[playerid][0], 1);
+	PlayerTextDrawBoxColor(playerid, SpecPlayer[playerid][0], 606348543);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][0], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][0], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][0], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][0], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][0], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][0], 0);
+
+	SpecPlayer[playerid][1] = CreatePlayerTextDraw(playerid, 514.666809, 247.244506, "box");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][1], 0.000000, 21.900005);
+	PlayerTextDrawTextSize(playerid, SpecPlayer[playerid][1], 637.000000, 0.000000);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][1], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][1], -1);
+	PlayerTextDrawUseBox(playerid, SpecPlayer[playerid][1], 1);
+	PlayerTextDrawBoxColor(playerid, SpecPlayer[playerid][1], -433246722);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][1], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][1], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][1], 690553089);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][1], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][1], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][1], 0);
+
+	SpecPlayer[playerid][2] = CreatePlayerTextDraw(playerid, 516.000000, 246.414840, "Ten:_Brian_Nelson");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][2], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][2], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][2], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][2], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][2], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][2], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][2], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][2], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][2], 0);
+
+	SpecPlayer[playerid][3] = CreatePlayerTextDraw(playerid, 516.666625, 263.007568, "Cap_do:_200");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][3], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][3], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][3], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][3], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][3], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][3], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][3], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][3], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][3], 0);
+
+	SpecPlayer[playerid][4] = CreatePlayerTextDraw(playerid, 517.333251, 280.015014, "Vi_tri:_Los_Santos");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][4], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][4], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][4], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][4], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][4], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][4], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][4], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][4], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][4], 0);
+
+	SpecPlayer[playerid][5] = CreatePlayerTextDraw(playerid, 518.000000, 297.022491, "Tien:_500000");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][5], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][5], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][5], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][5], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][5], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][5], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][5], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][5], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][5], 0);
+
+	SpecPlayer[playerid][6] = CreatePlayerTextDraw(playerid, 518.333312, 313.615112, "Bank:_500000");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][6], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][6], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][6], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][6], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][6], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][6], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][6], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][6], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][6], 0);
+
+	SpecPlayer[playerid][7] = CreatePlayerTextDraw(playerid, 518.666809, 331.452239, "Paycheck:_60000");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][7], 0.292000, 1.629036);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][7], 1);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][7], -1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][7], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][7], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][7], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][7], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][7], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][7], 0);
+
+	SpecPlayer[playerid][8] = CreatePlayerTextDraw(playerid, 575.000122, 428.933471, "Stop");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][8], 0.532333, 1.815703);
+	PlayerTextDrawTextSize(playerid, SpecPlayer[playerid][8], 0.000000, 58.000000);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][8], 2);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][8], -1);
+	PlayerTextDrawUseBox(playerid, SpecPlayer[playerid][8], 1);
+	PlayerTextDrawBoxColor(playerid, SpecPlayer[playerid][8], 522133503);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][8], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][8], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][8], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][8], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][8], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][8], 0);
+	PlayerTextDrawSetSelectable(playerid, SpecPlayer[playerid][8], 1);
+
+	SpecPlayer[playerid][9] = CreatePlayerTextDraw(playerid, 575.000122, 401.555480, "Kick");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][9], 0.532333, 1.815703);
+	PlayerTextDrawTextSize(playerid, SpecPlayer[playerid][9], 0.000000, 58.000000);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][9], 2);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][9], -1);
+	PlayerTextDrawUseBox(playerid, SpecPlayer[playerid][9], 1);
+	PlayerTextDrawBoxColor(playerid, SpecPlayer[playerid][9], 522133503);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][9], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][9], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][9], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][9], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][9], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][9], 0);
+	PlayerTextDrawSetSelectable(playerid, SpecPlayer[playerid][9], 1);
+
+	SpecPlayer[playerid][10] = CreatePlayerTextDraw(playerid, 575.000183, 373.762786, "Banned");
+	PlayerTextDrawLetterSize(playerid, SpecPlayer[playerid][10], 0.532333, 1.815703);
+	PlayerTextDrawTextSize(playerid, SpecPlayer[playerid][10], 0.000000, 58.000000);
+	PlayerTextDrawAlignment(playerid, SpecPlayer[playerid][10], 2);
+	PlayerTextDrawColor(playerid, SpecPlayer[playerid][10], -1);
+	PlayerTextDrawUseBox(playerid, SpecPlayer[playerid][10], 1);
+	PlayerTextDrawBoxColor(playerid, SpecPlayer[playerid][10], 522133503);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][10], 0);
+	PlayerTextDrawSetOutline(playerid, SpecPlayer[playerid][10], 0);
+	PlayerTextDrawBackgroundColor(playerid, SpecPlayer[playerid][10], 255);
+	PlayerTextDrawFont(playerid, SpecPlayer[playerid][10], 1);
+	PlayerTextDrawSetProportional(playerid, SpecPlayer[playerid][10], 1);
+	PlayerTextDrawSetShadow(playerid, SpecPlayer[playerid][10], 0);
+	PlayerTextDrawSetSelectable(playerid, SpecPlayer[playerid][10], 1);
