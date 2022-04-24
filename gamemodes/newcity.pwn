@@ -62,7 +62,6 @@
 #include <dini>
 #include <a_actor>
 #include <strlib>
-#include <LauncherAddon>
 // --------------------------------------
 //#include <dyn_objects>
 // ---------------------------------------
@@ -277,6 +276,8 @@ new Text:Textdraw6;
 new Text:Textdraw7;
 new Text:Textdraw8;*/
 // ---------------------------------------
+new PlayerText:SpecPlayer[MAX_PLAYERS][11];
+
 new PlayerText:Custom_Hud[MAX_PLAYERS][31];
 new PlayerText:PD_Card[MAX_PLAYERS][7];
 new PlayerText:Cz_Text[MAX_PLAYERS][8];
@@ -631,6 +632,7 @@ enum
 	DIALOG_UNREADTEXTS,
 	DIALOG_ATM,
 	DIALOG_GETJOB,
+	DIALOG_KICKPLAYER,
 	DIALOG_CAR,
 	DIALOG_ATMDEPOSIT,
 	DIALOG_ATMWITHDRAW,
@@ -2986,7 +2988,7 @@ new const staticEntrances[][entranceEnum] =
 {
 	{"Red Country Hospital", 	 	 1,  2,  22, true,  1241.8763, 326.8313, 19.7555, 270.0000, -2330.0376,111.4688,-5.3942, 180.0000},
 	{"County General",       1,  1,  22, true,  2034.2003, -1402.1976, 17.2951, 180.0000, -2330.0376,111.4688,-5.3942, 180.0000},
-	{"Temple Bank", 		 5,  3,  52, true,  1382.1488, -1088.6097, 28.2123, 89.0300, 1667.3536, -995.3700, 683.6913, 0.0000},
+	{"Temple Bank", 		 5,  3,  52, true,  1224.8687, 249.3369, 19.5469, 89.0300, 1667.3536, -995.3700, 683.6913, 0.0000},
 	{"City Hall",            3,  4,  0,  true,  1482.6517, -1771.6108, 18.7958, 0.0000,   676.3712, -96.0018, -77.2041, 90.0000},
 	{"Sheriff Department",    2,  5,  30, true,  627.5011, -571.7799, 17.6806, 90.0000,  1553.2065,-1674.0422,2110.5356, 270.0000},
 	{"Trung tam thi lai xe", 3,  6,  55, false, 854.4573, -604.6368, 18.4219, 180.0000, -2029.7135, -119.2240, 1035.1719, 0.0000},
@@ -2995,7 +2997,7 @@ new const staticEntrances[][entranceEnum] =
 	{"Crack house",          5,  9,  23, false, 2351.9138, -1170.1725, 28.0507, 0.0000,   2352.3337, -1180.9257, 1027.9766, 90.0000},
 	{"Heisenberg's trailer", 2,  10, 37, false, -65.0972,  -1574.3820, 2.6107,  180.0000,   1.6362, -3.0563, 999.4284, 90.0000},
 	{"FBI headquarters",     1,  11, 30, true,  330.6662,  -1509.9915, 36.0391, 225.0000,  -501.1844, 286.8678, 2001.0950, 0.0000},
-	{"Los Santos Casino",    5,  12, 25, true,  1022.5460, -1121.6831, 23.8720, 180.0000, 1095.5776, 33.3495, 1000.6797, 180.0000},
+	{"Red Country Casino",    5,  12, 25, true,  207.7825, -61.9611, 1.9202, 180.0000, 1095.5776, 33.3495, 1000.6797, 180.0000},
 	{"Rodeo Bank",           5,  13, 52, true,  593.5599,  -1250.8365, 18.2484, 20.0000,   1667.3536, -995.3700, 683.6913, 0.0000}
 };
 enum locEnum
@@ -4960,7 +4962,7 @@ LoadMap()
 {
 	#include "./inc/mappings/allmap.inc"
 	#include "./inc/mappings/farmer.inc"
-	#include "./inc/mappings/intsel.inc"
+	//#include "./inc/mappings/intsel.inc"
 }
 // - FOR PIZZAWTF
 
@@ -14369,6 +14371,12 @@ public HideAchievementTextdraw(playerid)
 	}
 }
 
+HideTextdrawSpec(playerid)
+{
+	for(new i=0;i<11;i++) PlayerTextDrawHide(playerid, SpecPlayer[playerid][i]);
+	CancelSelectTextDraw(playerid);
+}
+
 forward SpectateUpdate(playerid, targetid);
 public SpectateUpdate(playerid, targetid)
 {
@@ -20496,19 +20504,6 @@ forward Float:GetDoorsZCoordForFloor(floorid);
 
 public OnPlayerConnect(playerid)
 {
-	new version[24];
-	GetPlayerVersion(playerid, version, sizeof(version));
-	if(!strcmp(version, "Arizona PC"))
-	{
-		SetLauncherStatus(playerid, true);
-		SendClientMessage(playerid, -1, "Ban da su dung Launcher.");
-	}
-	else
-	{
-		SetLauncherStatus(playerid, false);
-		SendClientMessage(playerid, -1, "Ban khong su dung Launcher.");
-	}
-
 	ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_HEALTH, false);
     ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_ARMOUR, false);
     ToggleHUDComponentForPlayer(playerid, HUD_COMPONENT_MONEY, false);
@@ -21397,11 +21392,11 @@ public OnGameModeInit()
 	CreateDynamic3DTextLabel("Thi Bang Lai Xe\nGia: $100\n/thibanglai de bat dau.", COLOR_YELLOW, -2033.2953, -117.4508, 1035.1719, 10.0);
 	CreateDynamicPickup(1239, 1, -2033.2953, -117.4508, 1035.1719);
 
-	CreateDynamic3DTextLabel("Grotti dealership\n/buyvehicle to view catalog.\n/upgradevehicle for upgrades.", COLOR_YELLOW, 542.0433, -1293.5909, 17.2422, 10.0);
-	CreateDynamicPickup(1274, 1, 542.0433, -1293.5909, 17.2422);
+	CreateDynamic3DTextLabel("Dai ly xe hoi\n/buyvehicle de xem danh muc.", COLOR_YELLOW, 1393.9921, 400.6834, 19.8007, 10.0);
+	CreateDynamicPickup(1274, 1, 1393.9921, 400.6834, 19.8007);
 
-	CreateDynamic3DTextLabel("Dai Ly Thuyen\n/buyvehicle de xem danh muc.", COLOR_YELLOW, 154.2223, -1946.3030, 5.1920, 10.0);
-	CreateDynamicPickup(1274, 1, 154.2223, -1946.3030, 5.1920);
+	CreateDynamic3DTextLabel("Dai Ly Thuyen\n/buyvehicle de xem danh muc.", COLOR_YELLOW, 2159.3713, -99.9064, 2.7479, 10.0);
+	CreateDynamicPickup(1274, 1, 2159.3713, -99.9064, 2.7479);
 
 	CreateDynamic3DTextLabel("Dai Ly May Bay\n/buyvehicle de xem danh muc.", COLOR_YELLOW, 1892.6315, -2328.6721, 13.5469, 10.0);
 	CreateDynamicPickup(1274, 1, 1892.6315, -2328.6721, 13.5469);
@@ -26057,6 +26052,26 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
         }
 
 	}
+	if(GetPVarInt(playerid, "SpecVar") == 1)
+	{
+		if(playertextid == SpecPlayer[playerid][8])
+		{
+		    SendClientMessageEx(playerid, COLOR_ORANGE, "Ban khong con theo doi %s (ID %i).", GetPlayerRPName(PlayerInfo[playerid][pSpectating]), PlayerInfo[playerid][pSpectating]);
+		    PlayerInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
+		    SetPlayerToSpawn(playerid);
+	    	if(PlayerInfo[playerid][pAdmin] == 1)
+			{
+			    PlayerInfo[playerid][pTogglePhone] = 0;
+			}
+			CancelSelectTextDraw(playerid);
+			SetPVarInt(playerid, "SpecVar", 0);
+			HideTextdrawSpec(playerid);
+		}
+		if(playertextid == SpecPlayer[playerid][9])
+		{
+			ShowPlayerDialog(playerid, DIALOG_KICKPLAYER, DIALOG_STYLE_INPUT, "{2e62d2d}Kick nguoi choi", "Vui long nhap ly do ma ban muon kick nguoi choi nay ra khoi may chu.\n{2e62d2d}Nhap ly do duoi day:", "Xong", "Dong");
+		}
+	}
     return 1;
 }
 
@@ -26934,13 +26949,13 @@ LocateMethod(playerid, params[])
 	else if(!strcmp(params, "dealership", true))
 	{
 	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
-	    SetPlayerCheckpoint(playerid, 542.0433, -1293.5909, 17.2422, 3.0);
+	    SetPlayerCheckpoint(playerid, 1393.9921, 400.6834, 19.8007, 3.0);
 	    SendClientMessage(playerid, COLOR_WHITE, "** Da danh dau duoc vi tri cua dealership.");
 	}
 	else if(!strcmp(params, "boatdealer", true))
 	{
 	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
-	    SetPlayerCheckpoint(playerid, 154.2223, -1946.3030, 5.1920, 3.0);
+	    SetPlayerCheckpoint(playerid, 2159.3713, -99.9064, 2.7479, 3.0);
 	    SendClientMessage(playerid, COLOR_WHITE, "** Da danh dau duoc vi tri cua dealership boat.");
 	}
 	else if(!strcmp(params, "airdealer", true))
@@ -26952,7 +26967,7 @@ LocateMethod(playerid, params[])
 	else if(!strcmp(params, "bank", true))
 	{
 	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
-	    SetPlayerCheckpoint(playerid, 1373.4476,-1088.8151,25.1101, 3.0);
+	    SetPlayerCheckpoint(playerid, 1224.8687, 249.3369, 19.5469, 3.0);
 	    SendClientMessage(playerid, COLOR_WHITE, "** Da danh dau duoc vi tri cua bank.");
 	}
 	else if(!strcmp(params, "paintball", true))
@@ -26964,7 +26979,7 @@ LocateMethod(playerid, params[])
 	else if(!strcmp(params, "casino", true))
 	{
 	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
-	    SetPlayerCheckpoint(playerid, 1022.5992, -1122.8069, 23.8710, 3.0);
+	    SetPlayerCheckpoint(playerid, 207.7825, -61.9611, 1.9202, 3.0);
 	    SendClientMessage(playerid, COLOR_WHITE, "** Da danh dau duoc vi tri cua casino.");
 	}
 	else if(!strcmp(params, "vip", true))
@@ -27002,6 +27017,12 @@ LocateMethod(playerid, params[])
 	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
 	    SetPlayerCheckpoint(playerid, 1364.1636,249.7401,19.5669, 3.0);
 	    SendClientMessage(playerid, COLOR_WHITE, "Da danh dau vi tri cua cong viec Giao thuc an.");
+	}
+	else if(!strcmp(params, "farmer", true))
+	{
+	    PlayerInfo[playerid][pCP] = CHECKPOINT_MISC;
+	    SetPlayerCheckpoint(playerid, -83.0172, 9.7350, 3.1172, 3.0);
+	    SendClientMessage(playerid, COLOR_WHITE, "[GPS]{FFFFFF} Da danh dau vi tri cua cong viec Giao thuc an.");
 	}
 	else if(!strcmp(params, "courier", true))
 	{
@@ -32465,13 +32486,14 @@ CMD:spec(playerid, params[])
 	}
 	if(!strcmp(params, "off", true) && GetPlayerState(playerid) == PLAYER_STATE_SPECTATING)
 	{
-	    SendClientMessageEx(playerid, COLOR_ORANGE, "You are no longer spectating %s (ID %i).", GetPlayerRPName(PlayerInfo[playerid][pSpectating]), PlayerInfo[playerid][pSpectating]);
+	    SendClientMessageEx(playerid, COLOR_ORANGE, "Ban khong con theo doi %s (ID %i).", GetPlayerRPName(PlayerInfo[playerid][pSpectating]), PlayerInfo[playerid][pSpectating]);
 	    PlayerInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
 	    SetPlayerToSpawn(playerid);
     	if(PlayerInfo[playerid][pAdmin] == 1)
 		{
 		    PlayerInfo[playerid][pTogglePhone] = 0;
 		}
+		HideTextdrawSpec(playerid);
 	    return 1;
  	}
 	if(sscanf(params, "u", targetid))
@@ -32484,11 +32506,11 @@ CMD:spec(playerid, params[])
 	}
 	if(targetid == playerid)
 	{
-	    return SendClientMessage(playerid, COLOR_LIGHTRED, "You can't spectate yourself.");
+	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Ban khong the theo doi chinh minh.");
 	}
 	if(!IsPlayerSpawned(targetid))
 	{
-	    return SendClientMessage(playerid, COLOR_LIGHTRED, "The player specified is either not spawned, or spectating.");
+	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Nguoi choi duoc chi dinh chua xuat hien hoac dang bi theo doi.");
 	}
 	if(PlayerInfo[playerid][pAdmin] == 1)
 	{
@@ -32513,6 +32535,26 @@ CMD:spec(playerid, params[])
 
 	PlayerInfo[playerid][pSpectating] = targetid;
 	SendClientMessageEx(playerid, COLOR_ORANGE, "You are now spectating %s (ID %i).", GetPlayerRPName(PlayerInfo[playerid][pSpectating]), PlayerInfo[playerid][pSpectating]);
+	new string1[120], string2[120], string3[120], 
+	string4[120], string5[120], string6[120];
+	format(string1, sizeof(string1), "Ten:_%s", GetPlayerRPName(targetid));
+	format(string2, sizeof(string2), "Cap_do:_%d", PlayerInfo[targetid][pLevel]);
+	format(string3, sizeof(string3), "Vi_tri:_%s", GetPlayerZoneName(targetid));
+	format(string4, sizeof(string4), "Tien:_$%d", PlayerInfo[targetid][pCash]);
+	format(string5, sizeof(string5), "Ngan_hang:_$%d", PlayerInfo[targetid][pBank]);
+	format(string6, sizeof(string6), "Paycheck:_$%d", PlayerInfo[targetid][pPaycheck]);
+
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][2], string1);
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][3], string2);
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][4], string3);
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][5], string4);
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][6], string5);
+	PlayerTextDrawSetString(playerid, SpecPlayer[playerid][7], string6);
+
+	for(new i=0;i<11;i++) PlayerTextDrawShow(playerid, SpecPlayer[playerid][i]);
+    SetPVarInt(playerid, "SpecVar", 1);
+
+	SelectTextDraw(playerid, 0xFF6347FF);
 	return 1;
 }
 
@@ -32785,7 +32827,7 @@ CMD:kick(playerid, params[])
 	}
 
     Log_Write("log_punishments", "%s (uid: %i) da kick %s (uid: %i), reason: %s", GetPlayerNameEx(playerid), PlayerInfo[playerid][pID], GetPlayerNameEx(targetid), PlayerInfo[targetid][pID], reason);
-	SendClientMessageToAllEx(COLOR_LIGHTRED, "AdmCmd: %s da bi kick boi %s, reason: %s", GetPlayerRPName(targetid), GetPlayerRPName(playerid), reason);
+	SendClientMessageToAllEx(COLOR_LIGHTRED, "AdmCmd: %s da bi kick boi %s, ly do: %s", GetPlayerRPName(targetid), GetPlayerRPName(playerid), reason);
 	KickPlayer(targetid);
 	return 1;
 }
@@ -46514,7 +46556,7 @@ CMD:buyvehicle(playerid, params[])
 
 	PlayerInfo[playerid][pGangCar] = 0;
 
-	if(IsPlayerInRangeOfPoint(playerid, 3.0, 542.0433, -1293.5909, 17.2422))
+	if(IsPlayerInRangeOfPoint(playerid, 3.0, 1393.9921, 400.6834, 19.8007))
 	{
 		ShowDialogToPlayer(playerid, DIALOG_BUYVEHICLE);
 	}
@@ -46522,7 +46564,7 @@ CMD:buyvehicle(playerid, params[])
 	{
 	    ShowDialogToPlayer(playerid, DIALOG_BUYBOAT);
 	}
-	else if(IsPlayerInRangeOfPoint(playerid, 3.0, 1892.6315, -2328.6721, 13.5469))
+	else if(IsPlayerInRangeOfPoint(playerid, 3.0, 2159.3713, -99.9064, 2.7479))
 	{
 	    ShowDialogToPlayer(playerid, DIALOG_BUYAIRCRAFT);
 	}
