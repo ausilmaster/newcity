@@ -4966,6 +4966,7 @@ LoadMap()
 {
 	#include "./inc/mappings/allmap.inc"
 	#include "./inc/mappings/farmer.inc"
+	#include "./inc/mappings/register.inc"
 	//#include "./inc/mappings/intsel.inc"
 }
 // - FOR PIZZAWTF
@@ -14024,12 +14025,12 @@ public TutorialTimer(playerid, stage)
 				TogglePlayerSpectating(playerid, 0);
     			TogglePlayerControllable(playerid, 0);
 				HideTutorialTextDraws(playerid);
-				SetPlayerPos(playerid, 208.9438,-163.0987,1000.5234); //noi nguoi choi chon skin
-				SetPlayerFacingAngle(playerid, 90.4032);
+				SetPlayerPos(playerid, 645.9360,-116.7882,-78.9141); //noi nguoi choi chon skin
+				SetPlayerFacingAngle(playerid, 313.5930);
 				new vw = random(500);
 				SetPlayerVirtualWorld(playerid, vw); //vw khi nguoi choi chon skin
-				SetPlayerCameraPos(playerid, 205.0704,-162.8598,1000.5234); //Cameara pos
-				SetPlayerCameraLookAt(playerid, 208.9438,-163.0987,1000.5234);
+				SetPlayerCameraPos(playerid, 649.2880,-113.1055,-78.9141); //Cameara pos
+				SetPlayerCameraLookAt(playerid, 645.9360,-116.7882,-78.9141);
 				SendClientMessage(playerid, COLOR_LIGHTRED, "[He thong]{FFFFFF} Vui long chon trang phuc cho nhan vat");
 				switch(PlayerInfo[playerid][pGender])
 				{
@@ -24163,15 +24164,9 @@ public OnPlayerUpdate(playerid)
 	    PlayerInfo[playerid][pAnimation] = index;
 	}
 	//Textdraw Update For Player
-	if(IsPlayerAndroid(playerid))
-	{
-	}
-	else
-	{
-	    WantedTextdraw(playerid);
-	    TextdrawCus(playerid);
-	    Show_Weapon(playerid);
-	}
+    WantedTextdraw(playerid);
+    TextdrawCus(playerid);
+    Show_Weapon(playerid);
 	//------------------------
 	if(PlayerInfo[playerid][pHours] == PlayerInfo[playerid][pLevel] * 5)
 	{
