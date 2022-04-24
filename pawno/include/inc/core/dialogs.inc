@@ -8675,15 +8675,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 				    case 0: // JOBS
 				    {
-				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST1, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "Giao thuc an\nGiao hang nhanh", "Chon", "Dong");
+				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST1, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "Giao thuc an\nGiao hang nhanh\nNong dan", "Chon", "Quay lai");
 				    }
 				    case 1: // STORES
 				    {
-				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST2, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "Sieu thi\nCua hang vu khi\nCua hang quao ao\nGym\nNha hang\nTo chuc quang cao\nClub\nCua hang cong cu", "Chon", "Dong");
+				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST2, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "Sieu thi\nCua hang vu khi\nCua hang quao ao\nGym\nNha hang\nTo chuc quang cao\nClub\nCua hang cong cu", "Chon", "Quay lai");
 				    }
 				    case 2: // GENERAL LOCATIONS
 				    {
-				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST3, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "DMV\nBank\nPaintball\nCasino\nVIP\nDrug Factory\nMaterials Pickup 1\nMaterials Pickup 2\nCar Dealership\nAirplane Dealership\nBoat Dealership\nMaterials Factory 1\nMaterials Factory 2\nHeisenbergs\nAirport Materials Depot\nMarina Materials Depot", "Chon", "Dong");
+				    	ShowPlayerDialog(playerid, DIALOG_LOCATELIST3, DIALOG_STYLE_LIST, "GPS - Tim vi tri", "Trung tam thi lai xe\nNgan hang\nCasino\nDai ly xe hoi\nDai ly thuyen", "Chon", "Quay lai");
 				    }
 					case 3: // Find Turfs
 					{
@@ -8751,7 +8751,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						LocateMethod(playerid,"Pizzaman");
 	                case 1:
 						LocateMethod(playerid,"Courier");
+					case 2:
+					    LocateMethod(playerid,"Farmer");
 				}
+			}
+			else
+			{
+				ShowDialogToPlayer(playerid, DIALOG_LOCATE);
 			}
 		}
 		case DIALOG_LOCATELIST2:
@@ -8778,6 +8784,10 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				        LocateMethod(playerid,"ToolShop");
 				}
 			}
+			else
+			{
+				ShowDialogToPlayer(playerid, DIALOG_LOCATE);
+			}
 		}
 		case DIALOG_LOCATELIST3:
 		{
@@ -8789,27 +8799,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						LocateMethod(playerid,"DMV");
                     case 1:
 						LocateMethod(playerid,"Bank");
-                    case 2:
-						LocateMethod(playerid,"Paintball");
-                	case 3:
+                	case 2:
 						LocateMethod(playerid,"Casino");
-                    case 4:
-						LocateMethod(playerid,"VIP");
-                    case 5:
-						LocateMethod(playerid,"Smuggledrugs");
-                	case 6:
+                	case 3:
 						LocateMethod(playerid,"Dealership");
                     case 7:
 						LocateMethod(playerid,"AirDealer");
-                    case 8:
-						LocateMethod(playerid,"BoatDealer");
-                	case 9:
-						LocateMethod(playerid,"Heisenbergs");
-					case 10:
-					    LocateMethod(playerid,"AirportDepot");
-					case 11:
-					    LocateMethod(playerid,"MarinaDepot");
 				}
+			}
+			else
+			{
+				ShowDialogToPlayer(playerid, DIALOG_LOCATE);
 			}
 		}
 		case DIALOG_LOCATELISTC:
@@ -9050,6 +9050,27 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			    		callcmd::carinfo(playerid, "\1");
 			    	}
 			    }
+			}
+		}
+		case DIALOG_KICKPLAYER:
+		{
+			if(response)
+			{
+				new reason = strlen(inputtext),
+				    targetid;
+				if(isnull(inputtext))
+	            {
+	                ShowDialogToPlayer(playerid, DIALOG_KICKPLAYER);
+	                return 1;
+				}
+				if(reason >= 1)
+				{
+					KickPlayer(targetid);
+					SendClientMessageToAllEx(COLOR_LIGHTRED, "AdmCmd: %s da bi kick boi %s, ly do: %s", GetPlayerRPName(targetid), GetPlayerRPName(playerid), reason);
+					SetPVarInt(playerid, "SpecVar", 0);
+
+					HideTextdrawSpec(playerid);
+				}
 			}
 		}
 		case DIALOG_NONE:
